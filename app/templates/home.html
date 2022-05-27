@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Responsive Admin Dashboard | Redesign</title>
+	<link rel="stylesheet" href="../static/css/stylehome.css">
+
+</head>
+
+<body>
+	<div class="container">
+		<div class="navigation">
+			<ul>
+				<li>
+					<a href="#">
+						<span class="icon">
+							<ion-icon name="code-working"></ion-icon>
+						</span>
+						<span class="title">COMANDO FÁCIL</span>
+					</a>
+				</li>
+				<li>
+					<a href="/search/linux">
+						<span class="icon">
+							<ion-icon name="logo-tux"></ion-icon>
+						</span>
+						<span class="title">Linux</span>
+					</a>
+				</li>
+				<li>
+					<a href="/search/github">
+						<span class="icon">
+							<ion-icon name="logo-github">
+						</span>
+						<span class="title">Git Hub</span>
+					</a>
+				</li>
+				<li>
+					<a href="/search/mysql">
+						<span class="icon">
+							<ion-icon name="logo-buffer"></ion-icon>
+						</span>
+						<span class="title">Mysql</span>
+					</a>
+				</li>
+				<li>
+					<a href="/search/windows">
+						<span class="icon">
+							<ion-icon name="logo-windows"></ion-icon>
+						</span>
+						<span class="title">Windows</span>
+					</a>
+				</li>
+				<li>
+					<a href="/search/docker">
+						<span class="icon">
+							<ion-icon name="boat"></ion-icon>
+						</span>
+						<span class="title">Docker</span>
+					</a>
+				</li>
+				<li>
+					<a href="/search/rede">
+						<span class="icon">
+							<ion-icon name="cloud"></ion-icon>
+						</span>
+						<span class="title">Rede</span>
+					</a>
+				</li>
+				<li>
+					<a href="/search/Linguagens">
+						<span class="icon">
+							<ion-icon name="cafe"></ion-icon>
+						</span>
+						<span class="title">Linguagens</span>
+					</a>
+				</li>
+				<li>
+					<a href="/search/outros">
+						<span class="icon">
+							<ion-icon name="cube"></ion-icon>
+						</span>
+						<span class="title">Outros</span>
+					</a>
+				</li>
+				<li>
+					<a href={{ url_for('logout') }}>
+						<span class="icon">
+							<ion-icon name="log-out-outline"></ion-icon>
+						</span>
+						<span class="title">Sair</span>
+					</a>
+				</li>
+
+			</ul>
+		</div>
+
+		<!--main-->
+		<div class="main">
+			<div class="topbar">
+				<div class="toggle">
+					<ion-icon name="menu-outline"></ion-icon>
+				</div>
+				<!--search-->
+				<div class="search">
+					<label>
+						<input type="text" placeholder="Search...">
+						<ion-icon name="search-outline"></ion-icon>
+					</label>
+				</div>
+				<!--userImg-->
+				<div class="user">
+					<img src="../static/images/user.jpg">
+				</div>
+			</div>
+
+			<!--cards-->
+			<div class="cardBox">
+				<div class="card">
+					<div>
+						<div class="numbers">1,504</div>
+						<div class="cardName">Daily Views</div>
+					</div>
+					<div class="iconBx">
+						<ion-icon name="eye-outline"></ion-icon>
+					</div>
+				</div>
+				<div class="card">
+					<div>
+						<div class="numbers">80</div>
+						<div class="cardName">Sales</div>
+					</div>
+					<div class="iconBx">
+						<ion-icon name="cart-outline"></ion-icon>
+					</div>
+				</div>
+				<div class="card">
+					<div>
+						<div class="numbers">284</div>
+						<div class="cardName">Comments</div>
+					</div>
+					<div class="iconBx">
+						<ion-icon name="chatbubbles-outline"></ion-icon>
+					</div>
+				</div>
+				<div class="card">
+					<div>
+						<div class="numbers">$7,842</div>
+						<div class="cardName">Earning</div>
+					</div>
+					<div class="iconBx">
+						<ion-icon name="cash-outline"></ion-icon>
+					</div>
+				</div>
+			</div>
+
+			
+			<!--data list-->
+			{% if data[0] %}
+			<div class="details">
+				<div class="recentOrders">
+					<div class="cardHeader">
+						<h2>Comandos {{data[0][0]['name']}}</h2>
+					</div>
+					
+
+					{% for item in data[0] %}
+					<div class="commadsList">
+						<h1 class="commandsTitle">{{item.title}}</h1>
+						<p class="commandsDescription">{{item.description}}</p>
+						<div class="example">
+							<h3>Example</h3>
+							<div class="commads">
+								<p1>{{item.commands}}</p1>
+							</div>
+
+							<p>Tags: {{item.tags}}</p>
+							<p>Criador: {{item.creator}}</p>
+						<!-- 	<p>Data: {{item.createdAt}}</p>
+ -->
+
+						</div>
+						<div class="btnactions">
+							{% if user.user.level == 2 %}
+							<a id="edit" href="http://">
+
+								
+								<span class="icon">
+									<ion-icon name="create-outline"></ion-icon>
+								</span>
+								<span class="title">Editar</span>
+
+							</a>
+							<a id="delete" href="http://">
+								<span class="icon">
+									<ion-icon name="trash-outline"></ion-icon>
+								</span>
+								<span class="title">Apagar</span>
+
+							</a>
+							{% endif %}
+
+							<a id="info" href="http://">
+								<span class="icon">
+									<ion-icon name="information-circle-outline"></ion-icon>
+								</span>
+								<span class="title">Detalhes</span>
+
+							</a>
+							
+						</div>
+
+
+						<hr class="line" size = 7 >
+					</div>	
+
+					{% endfor %}
+
+				</div>
+
+			</div>
+
+			{% endif %}
+			
+		</div>
+
+	</div>
+
+	
+
+
+
+
+
+
+
+	<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+	<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+	<script>
+		//MenuToggle
+
+		let toggle = document.querySelector('.toggle')
+		let navigation = document.querySelector('.navigation')
+		let main = document.querySelector('.main')
+
+		toggle.onclick = function () {
+			navigation.classList.toggle('active')
+			main.classList.toggle('active')
+
+		}
+
+
+
+
+
+
+
+
+
+
+		// add hovered class in select list item
+		let list = document.querySelectorAll('.navigation li');
+		function activelink() {
+			list.forEach((item) =>
+				item.classList.remove('hovered'));
+			this.classList.add('hovered');
+		}
+		list.forEach((item) =>
+			item.addEventListener('mouseenter', activelink))
+
+	</script>
+</body>
+
+</html>

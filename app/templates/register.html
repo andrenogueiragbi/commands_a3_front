@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+  <meta charset="utf-8">
+
+  <title>Comando Fácil | Login</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+  <link rel="stylesheet" type="text/css" href="../static/css/style.css" />
+
+  
+</head>
+
+<body class="gray-bg fixed-sidebar fixed-nav md-skin pace-done" style="background-color: #333439;">
+  <div id="large-header" class="div-center positioned-divs div-under">
+    <canvas id="demo-canvas"></canvas>
+    <div id="cdiv" class="loginColumns animated fadeInDown positioned-divs div-over login-div">
+      <div class="row">
+        <div class="col-md-6">
+
+          <script class="login-logo-src login-img align-middle m-t-lg"
+            src="../static/anime/player.json"></script>
+          <lottie-player src="../static/anime/logo.json" background="transparent"
+            speed="1.5" loop autoplay></lottie-player>
+        </div>
+
+        <div class="col-md-6">
+          <div class="ibox-content ibox-content-bg">
+
+
+            <div class="wrapper fadeInDown">
+              <div id="formContent">
+                <div class="fadeIn first">
+                  <img src="../static/images/conecte-se.png" id="icon" alt="User Icon" />
+                </div>
+
+
+                <form method="POST">
+                  <input type="text" id="name" class="fadeIn second" name="name" placeholder="name" required>
+                  <input type="text" id="email" class="fadeIn second" name="email" placeholder="email" required>
+                  <input type="password" id="password" class="fadeIn third" name="password" placeholder="password"
+                    required>
+                  <input type="text" id="coupon" class="fadeIn second" name="coupon" placeholder="coupon" required>
+                  <input type="text" id="company" class="fadeIn second" name="company" placeholder="company" required>
+                  <input type="submit" name="alert password" class="fadeIn fourth" value="SALVAR">
+                  {% if erro == True %}
+                  {% block content %}
+                  <div id="teste" class="alert alert-danger" role="alert">
+                    <p>{{ message }}</p>
+                  </div>
+                  {% endblock content %}
+                  {% endif %}
+                </form>
+
+                <br>
+                <div id="formFooter">
+                  <a class="underlineHover" href="#">Esqueceu a Senha?</a>
+                  <a class="underlineHover" href="#">Solicite seu Cupom.</a>
+                  <a class="underlineHover" href={{ url_for('login') }}>Já Tenho Cadastro.</a>
+
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <hr class="hr-footer login_footer">
+  <div class="row login_footer">
+    <div class="col-xs-12 m-l-md">
+      <table class="col-xs-12">
+        <tbody>
+          <tr>
+            <td>
+              Copyright <a href="http://comandosfacil.com">Comandos Fácil</a>
+            </td>
+            <td class="text-right m-r-md">
+              <span id="footyear">
+                <small>©</small>
+              </span>
+              &nbsp;
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+
+
+  <script src="../static/js/js_canvas/TweenLite.min.js"></script>
+  <script src="../static/js/js_canvas/EasePack.min.js"></script>
+  <script src="../static/js/js_canvas/rAF.js"></script>
+  <script src="../static/js/js_canvas/demo-1.js"></script>
+
+
+</body>
+
+</html>
