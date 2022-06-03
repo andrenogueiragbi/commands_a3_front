@@ -26,10 +26,9 @@
       <div class="row">
         <div class="col-md-6">
 
-          <script class="login-logo-src login-img align-middle m-t-lg"
-            src="../static/anime/player.json"></script>
-          <lottie-player src="../static/anime/logo.json" background="transparent"
-            speed="1.5" loop autoplay></lottie-player>
+          <script class="login-logo-src login-img align-middle m-t-lg" src="../static/anime/player.json"></script>
+          <lottie-player src="../static/anime/logo.json" background="transparent" speed="1.5" loop autoplay>
+          </lottie-player>
         </div>
 
         <div class="col-md-6">
@@ -50,12 +49,21 @@
 
                   <br>
                   <input type="submit" name="alert password" class="fadeIn fourth" value="ENTRAR">
+                  {% if erro == True %}
+                  {% block content %}
+                  <div id="teste" class="alert alert-danger" role="alert">
+                    <p>{{ message }}</p>
+                  </div>
+                  {% endblock content %}
+                  {% endif %}
+
+
                 </form>
                 <br>
                 <div id="formFooter">
                   <a class="underlineHover" href="#">Esqueceu a Senha?</a>
                   <a class="underlineHover" href={{ url_for('register') }}>Registrar</a>
-                 
+
                 </div>
 
               </div>

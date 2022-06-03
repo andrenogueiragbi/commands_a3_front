@@ -55,7 +55,7 @@ def login():
             return redirect(url_for("home"))
         
 
-        return render_template("login.html",erro=True)
+        return render_template("login.html",erro=True,message=statusLogin['message'])
    
 
     return render_template("login.html")
@@ -237,7 +237,7 @@ def updateCommands(idCommands):
 ######################################################
 
 if __name__ == "__main__":
-    app.run(port=3000, host='0.0.0.0', debug=True, threaded=True)
+    app.run(debug=True)
 
 
     """
