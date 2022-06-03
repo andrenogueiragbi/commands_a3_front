@@ -6,10 +6,39 @@
 	<title>Responsive Admin Dashboard | Redesign</title>
 	<link rel="stylesheet" href="../static/css/stylehome.css">
 
+
+
+
+
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+		crossorigin="anonymous"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+
+
+	<link rel="stylesheet" href="//cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
+	<link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.dataTables.min.css" />
+
+
 </head>
 
 <body>
-	<div class="container">
+
+
+
+
+
+
+
+	<div class="container1">
 		<div class="navigation">
 			<ul>
 				<li>
@@ -98,138 +127,339 @@
 
 		<!--main-->
 		<div class="main">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 			<div class="topbar">
 				<div class="toggle">
 					<ion-icon name="menu-outline"></ion-icon>
 				</div>
-				<!--search-->
-				<div class="search">
-					<label>
-						<input type="text" placeholder="Search...">
-						<ion-icon name="search-outline"></ion-icon>
-					</label>
-				</div>
-				<!--userImg-->
 				<div class="user">
 					<img src="../static/images/user.jpg">
 				</div>
 			</div>
 
-			<!--cards-->
-			<div class="cardBox">
-				<div class="card">
-					<div>
-						<div class="numbers">1,504</div>
-						<div class="cardName">Daily Views</div>
-					</div>
-					<div class="iconBx">
-						<ion-icon name="eye-outline"></ion-icon>
-					</div>
-				</div>
-				<div class="card">
-					<div>
-						<div class="numbers">80</div>
-						<div class="cardName">Sales</div>
-					</div>
-					<div class="iconBx">
-						<ion-icon name="cart-outline"></ion-icon>
-					</div>
-				</div>
-				<div class="card">
-					<div>
-						<div class="numbers">284</div>
-						<div class="cardName">Comments</div>
-					</div>
-					<div class="iconBx">
-						<ion-icon name="chatbubbles-outline"></ion-icon>
-					</div>
-				</div>
-				<div class="card">
-					<div>
-						<div class="numbers">$7,842</div>
-						<div class="cardName">Earning</div>
-					</div>
-					<div class="iconBx">
-						<ion-icon name="cash-outline"></ion-icon>
-					</div>
-				</div>
+
+
+
+
+
+			{% with messages = get_flashed_messages() %}
+
+			{% if messages %}
+
+			{% for message in messages %}
+
+			<div class="alert alert-success alert-dismissable" role="alert">
+
+				<button type="button" class="close" data-dismiss="alert" aria-label="close">
+
+					<span aria-hidden="true">x</span>
+
+				</button>
+				{{message}}
 			</div>
 
-			
+			{% endfor %}
+			{% endif %}
+			{% endwith %}
+
+
+
+
 			<!--data list-->
-			{% if data[0] %}
+
 			<div class="details">
 				<div class="recentOrders">
 					<div class="cardHeader">
-						<h2>Comandos {{data[0][0]['name']}}</h2>
-					</div>
-					
+						{% if  data[0] %}
+						<h2>{{ data[0][0]['name'] }}</h2>
+						{% endif %}
+	
+						
 
-					{% for item in data[0] %}
-					<div class="commadsList">
-						<h1 class="commandsTitle">{{item.title}}</h1>
-						<p class="commandsDescription">{{item.description}}</p>
-						<div class="example">
-							<h3>Example</h3>
-							<div class="commads">
-								<p1>{{item.commands}}</p1>
+						<h9>{{user.user.name}}</h9>
+
+
+
+
+						<!-- Button trigger modal -->
+						<button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
+							<ion-icon name="add-outline"></ion-icon>NOVO
+						</button>
+
+						<!-- Modal -->
+						<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+							aria-hidden="true">
+							<div class="modal-dialog modal-lg" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h5 class="modal-title" id="exampleModalLabel">Cadastro Novo Comando</h5>
+										<button type="button" class="btn-close" data-bs-dismiss="modal"
+											aria-label="Close"></button>
+									</div>
+									<div class="modal-body">
+										<form method="post" action="/save" class="row g-3">
+
+											<div class="col-md-6">
+												<label for="new_login" class="form-label">Tipo:</label>
+
+												<select name="id" id="new_status" class="form-select form-control">
+													<option value="" selected>Selecione...</option>
+													{% for type in types %}
+													<option value="{{type.id}}-{{type.name}}">{{type.name}}</option>
+													{% endfor %}
+												</select>
+											</div>
+
+
+											<div class="col-md-6">
+												<label class="form-label">Titulo:</label>
+												<input name="title" type="text" class="form-control">
+											</div>
+
+
+
+
+											<div class="col-md-12">
+												<label class="form-label">O que faz?:</label>
+												<input name="description" type="text" class="form-control">
+											</div>
+
+											<div class="col-md-12">
+												<label class="form-label">Linha de comando:</label>
+												<input name="commands" type="text" class="form-control">
+											</div>
+
+
+											<div class="col-md-6">
+												<label class="form-label">Criado Por:</label>
+												<input name="creator" value="{{user.user.name}}" type="text"
+													class="form-control" readonly>
+											</div>
+
+											<div class="col-md-6">
+												<label class="form-label">Tags:</label>
+												<input name="tags" type="text" class="form-control">
+											</div>
+											<div class="modal-footer">
+												<button type="button" class="btn btn-secondary"
+													data-bs-dismiss="modal">Fechar</button>
+												<button type="submit" class="btn btn-primary">Salvar</button>
+											</div>
+
+										</form>
+									</div>
+
+								</div>
 							</div>
-
-							<p>Tags: {{item.tags}}</p>
-							<p>Criador: {{item.creator}}</p>
-						<!-- 	<p>Data: {{item.createdAt}}</p>
- -->
-
 						</div>
-						<div class="btnactions">
-							{% if user.user.level == 2 %}
-							<a id="edit" href="http://">
-
-								
-								<span class="icon">
-									<ion-icon name="create-outline"></ion-icon>
-								</span>
-								<span class="title">Editar</span>
-
-							</a>
-							<a id="delete" href="http://">
-								<span class="icon">
-									<ion-icon name="trash-outline"></ion-icon>
-								</span>
-								<span class="title">Apagar</span>
-
-							</a>
-							{% endif %}
-
-							<a id="info" href="http://">
-								<span class="icon">
-									<ion-icon name="information-circle-outline"></ion-icon>
-								</span>
-								<span class="title">Detalhes</span>
-
-							</a>
-							
-						</div>
+					</div>
+					<!-- 
+					<h1>{{ data }}</h1> -->
 
 
-						<hr class="line" size = 7 >
-					</div>	
 
-					{% endfor %}
 
+					<table id="TableSimple">
+						<thead>
+							<tr>
+								<td class="all" style="text-align: center ;">+</td>
+								<td class="all">#</td>
+								<td class="all">Titulo</td>
+								<td class="none">O que faz?:</td>
+								<td class="none">Linha de comandos:</td>
+								<td class="none">Criado em:</td>
+								<td class="none">Autor:</td>
+
+
+
+								<td class="none">Tipo</td>
+								<td class="all">Tags</td>
+								<td class="all">Ações</td>
+							</tr>
+						</thead>
+						<tbody id="corpo">
+
+
+							{% for item in data[0] %}
+
+							<tr>
+
+
+								<td title="+info"></td>
+								<td>{{item.id}}</td>
+								<td>{{item.title}}</td>
+								<td>{{item.description}}</td>
+								<td>{{item.commands}}</td>
+								<td>{{item.created_at}}</td>
+								<td>{{item.creator}}</td>
+
+								<td>{{item.name}}</td>
+								<td>{{item.tags}}</td>
+
+
+								<td>
+
+
+
+
+									<a href="/update/{{item.id}}" type="button" class="btn btn-outline-warning"
+										style=" border:none;" data-bs-toggle="modal" data-bs-target="#modaledit{{item.id}}">
+										<ion-icon size="large" name="create-outline"></ion-icon>
+									</a>
+
+
+									<div class="modal fade" id="modaledit{{item.id}}" tabindex="-1"
+										aria-labelledby="exampleModalLabel" aria-hidden="true">
+										<div class="modal-dialog modal-lg" role="document">
+											<div class="modal-content">
+												<div class="modal-header">
+													<h5 class="modal-title" id="exampleModalLabel">Cadastro Novo Comando
+													</h5>
+													<button type="button" class="btn-close" data-bs-dismiss="modal"
+														aria-label="Close"></button>
+												</div>
+												<div class="modal-body">
+													<form method="post" action="/update/{{item.id}}" class="row g-3">
+
+														<div class="col-md-6">
+															<label for="new_login" class="form-label">Tipo:</label>
+
+															<select name="id" id="new_status"
+																class="form-select form-control">
+																<option value="{{item.type_id}}-{{item.name}}" selected>{{item.name}}</option>
+																{% for type in types %}
+																<option value="{{type.id}}-{{type.name}}">{{type.name}}
+																</option>
+																{% endfor %}
+															</select>
+														</div>
+
+
+														<div class="col-md-6">
+															<label class="form-label">Titulo:</label>
+															<input name="title" type="text" class="form-control" value="{{item.title}}">
+														</div>
+
+
+
+
+														<div class="col-md-12">
+															<label class="form-label">O que faz?:</label>
+															<input name="description" type="text" class="form-control" value="{{item.description}}">
+														</div>
+
+														<div class="col-md-12">
+															<label class="form-label">Linha de comando:</label>
+															<input name="commands" type="text" class="form-control" value="{{item.commands}}">
+														</div>
+
+
+														<div class="col-md-6">
+															<label class="form-label">Criado Por:</label>
+															<input name="creator" value="{{user.user.name}}" type="text"
+																class="form-control" readonly>
+														</div>
+
+														<div class="col-md-6">
+															<label class="form-label">Tags:</label>
+															<input name="tags" type="text" class="form-control" value="{{item.tags}}">
+														</div>
+														<div class="modal-footer">
+															<button type="button" class="btn btn-secondary"
+																data-bs-dismiss="modal">Fechar</button>
+															<button type="submit"
+																class="btn btn-primary">Salvar</button>
+														</div>
+
+													</form>
+												</div>
+
+											</div>
+										</div>
+									</div>
+
+
+
+
+									<a href="/commandDelete/{{item.id}}" type="button" class="btn btn-outline-danger"
+										style=" border:none;" onclick="return confirm('Deseja realmente apagar?')">
+										<ion-icon size="large" name="trash-outline"></ion-icon>
+									</a>
+
+
+								</td>
+							</tr>
+
+							{% endfor %}
+
+						</tbody>
+					</table>
 				</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 			</div>
 
-			{% endif %}
-			
 		</div>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	</div>
-
-	
-
-
 
 
 
@@ -238,18 +468,15 @@
 	<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
 	<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 
-	<script>
-		//MenuToggle
 
-		let toggle = document.querySelector('.toggle')
-		let navigation = document.querySelector('.navigation')
-		let main = document.querySelector('.main')
+	<!-- datatables JavaScript-->
+	<script src='//cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js'></script>
 
-		toggle.onclick = function () {
-			navigation.classList.toggle('active')
-			main.classList.toggle('active')
 
-		}
+	<!-- datatables Custom Filtering-->
+	<script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
+
+	<script type="text/javascript" src="../static/js/main.js"></script>
 
 
 
@@ -258,19 +485,6 @@
 
 
 
-
-
-		// add hovered class in select list item
-		let list = document.querySelectorAll('.navigation li');
-		function activelink() {
-			list.forEach((item) =>
-				item.classList.remove('hovered'));
-			this.classList.add('hovered');
-		}
-		list.forEach((item) =>
-			item.addEventListener('mouseenter', activelink))
-
-	</script>
 </body>
 
 </html>

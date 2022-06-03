@@ -1,10 +1,10 @@
-import json
+import re
 from app import app
-from flask import  redirect, url_for, render_template, request, session
+from flask import  redirect, url_for, render_template, request, session,flash
 from app.controllers.login import makelogin
 from app.controllers.register import makeRegister
-from app.controllers.APIsearch import searchType
-import os
+from app.controllers.APIcommands import searchCommandSpecific,saveCommand, deleteCommand,updateCommand
+from app.controllers.APItype import searchTypeCommands
 import json
 
 
@@ -17,12 +17,13 @@ def search(type):
 
         user = session["user"]
 
-        data = searchType(type)
-        print(data)
+        data = searchCommandSpecific(type)            
+        types = searchTypeCommands()
+
 
         if(not data["erro"]):
             
-            return render_template("home.html",user=user, data = data['commands'])
+            return render_template("home.html",user=user, data = data['commands'],types = types['types'])
 
 
     return redirect(url_for("login")) 
@@ -67,10 +68,11 @@ def home():
         
         user = session["user"]
 
-        data = searchType('linux')
+        data = searchCommandSpecific('linux')
+        types = searchTypeCommands()
         
 
-        return render_template("home.html",user=user, data = data['commands'])
+        return render_template("home.html",user=user, data = data['commands'],types = types['types'])
     
 
     return redirect(url_for('login'))
@@ -121,12 +123,116 @@ def register():
 
 
 
-@app.route("/teste",methods=["GET"])
-def teste():
+@app.route("/commandDelete/<id>/",methods=["GET", "POST"])
+def commandDelete(id):
 
-    return render_template("teste.html")
+    print('>>>>>>>>>>>>>',id)
+
+    if "user" in session and id:
+        
+        user = session["user"]
+
+        resultsave = deleteCommand(int(id))
+
+        if(resultsave['erro']):
+
+            flash(f"O {resultsave['message']}!")
 
 
+        data = searchCommandSpecific('linux')
+        types = searchTypeCommands()
+
+
+
+        return redirect(url_for("home"))
+    
+
+    return redirect(url_for('login'))
+
+
+
+
+@app.route("/save",methods=["GET", "POST"])
+def saveCommands(): 
+
+    if "user" in session:
+        
+        user = session["user"]
+
+        if request.method == "POST":
+
+            id = request.form.get("id").split('-')
+            pagNewComands = id[1]
+            title = request.form.get("title")
+            description = request.form.get("description")
+            commands = request.form.get("commands")
+            tags = request.form.get("tags")
+            creator = request.form.get("creator")
+
+            print(pagNewComands,'...')
+
+            resultsave = saveCommand(int(id[0]),title,description,commands,tags,creator)
+
+            if(resultsave['erro']):
+
+                flash(f"O {resultsave['message']}!")
+
+
+
+        
+            return redirect(url_for(f'search',type=id[1]))
+
+    
+
+    return redirect(url_for('login'))
+
+
+
+
+
+@app.route("/update/<idCommands>",methods=["GET", "POST"])
+def updateCommands(idCommands): 
+
+    if "user" in session:
+        
+        user = session["user"]
+
+        if request.method == "POST":
+
+            id = request.form.get("id").split('-')
+
+            print('array',id)
+
+            print('o id  type_id é esse:', id[0])
+            print('o id idCommands da url é esse:', idCommands)
+
+
+
+
+            pagNewComands = id[1]
+            title = request.form.get("title")
+            description = request.form.get("description")
+            commands = request.form.get("commands")
+            tags = request.form.get("tags")
+            creator = request.form.get("creator")
+
+
+            resultsave = updateCommand(idCommands,int(id[0]),title,description,commands,tags,creator)
+
+          
+            if(resultsave['erro']):
+
+                flash(f"O {resultsave['message']}!")
+
+
+
+
+        
+            return redirect(url_for(f'search',type=pagNewComands))
+
+    
+
+    return redirect(url_for('login'))
 
 
 ######################################################

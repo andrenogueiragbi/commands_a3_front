@@ -15,11 +15,26 @@
     --black1: #222;
     --black2: #999;  
 }
+
+
+
 body{
     min-height: 100vh;
     overflow-x: hidden;
 }
-.container
+
+/*sobrepor bootstrap*/
+li, label, h5
+{
+
+    color: #222;
+}
+
+
+
+
+
+.container2
 {
     position: relative;
     width: 100%;
@@ -97,6 +112,11 @@ body{
 {
     font-size: 1.75em;
 }
+
+.datails .recentOrders table tr td:last-child:hover {
+    color: #fc0000 !important;
+}
+
 .navigation ul li a .title
 {
     position: relative;
@@ -248,67 +268,10 @@ body{
 }
 
 
-.cardBox
-{
-    position: relative;
-    width: 100%;
-    padding: 20px;
-    display:grid;
-    grid-template-columns: repeat(4,1fr);
-    grid-gap: 30px;
-
-}
-
-.cardBox .card{
-    position: relative;
-    background: var(--white);
-    padding: 30px;
-    border-radius: 20px;
-    display: flex;
-    justify-content: space-between;
-    cursor:pointer;
-    box-shadow: 0 7px 25px rgba(0,0,0,0.08)
-
-}
-.cardBox .card .numbers 
-{
-    position: relative;
-    font-weight: 500;
-    font-size: 2.5em;
-    color: var(--blue)
-
-}
-
-.cardBox .card .cardName
-{
-    color: var(--black2);
-    font-size:1.1em;
-    margin-top:5px
-}
-
-.cardBox .card .iconBx
-{
-    font-size: 3.5em;
-    color: var(--black2);
-
-
-}
-
-.cardBox .card:hover
-{
-    background: var(--blue);
-}
-
-.cardBox .card:hover .numbers,
-.cardBox .card:hover .cardName,
-.cardBox .card:hover .iconBx
-{
-    color: var(--white)
-}
 
 .details{
     position: relative;
-    width: 155%;
+    width: 150%;
     padding: 20px;
     display: grid;
     grid-template-columns: 2fr 1fr;
@@ -322,7 +285,7 @@ body{
     min-height: 400px;
     background: var(--white);
     padding: 20px;
-    box-shadow: 0 7px 25px rgba(0,0,0,0.08);
+    box-shadow: 4px 5px 32px 15px rgba(0,0,0,0.31);
     border-radius: 20px;
     
     
@@ -341,7 +304,7 @@ body{
 .cardHeader h2
 {
     font-weight: 600;
-    color: var(--black2);
+    color: var(--white);
     position: relative;
     padding: 5px 10px;
     background: var(--blue);
@@ -365,6 +328,17 @@ body{
     font-weight: 600;
 }
 
+
+
+
+.datails .recentOrders table tr
+{
+    color: var(--black1) !important;
+    border-bottom: 1px solid rgb(0,0,0,0.1) !important;
+    text-align: center !important;
+}
+
+
 .details .recentOrders table tr
 {
     color: var(--black1);
@@ -387,14 +361,20 @@ body{
     
 }
 
+
+
+
+
+
+
 .details .recentOrders table tr td:last-child
 {
-    text-align: end;
+    text-align: left;
 }
 
 .details .recentOrders table tr td:nth-child(2)
 {
-    text-align: end;
+    text-align: center;
 }
 
 .details .recentOrders table tr td:nth-child(3)
@@ -681,40 +661,42 @@ body{
 }
 
 
-.btnactions a
-{
-    position: relative;
-    text-decoration: none;
-    color: var(--black1);
-    padding: 15px;
-    text-align: center;
-    font-size: 1.1em;
 
-}
 
-.btnactions a#edit:hover{
-    background: var(--black1);
+.btnactions button#edit:hover{
+    background: rgb(253, 152, 70);
     border-radius: 10px;
-    color: yellow;
+    color: #f5f5f5;
+    font-size: large;
 }
 
-.btnactions a#delete:hover{
-    background: var(--black1);
+.btnactions button#delete:hover{
+    background: red;
     border-radius: 10px;
-    color: red;
+    color: #f5f5f5;
+    font-size: large;
 }
 
-.btnactions a#info:hover{
-    background: var(--black1);
+.btnactions button#info:hover{
+    background: blue;
     border-radius: 10px;
-    color: blue;
+    color: #f5f5f5;
+    font-size: large;
+}
+
+.cardHeader #new:hover{
+    background: #47b139;
+    padding: 5px 10px;
+    color: #f5f5f5;
+    font-size: 15px;
 }
 
 
-.btnactions a ion-icon
+
+.btnactions button ion-icon
 {
     top: 0;
-    left: 5px;
+    left: 10px;
     font-size: 1.3em
 }
 
@@ -724,3 +706,50 @@ body{
     margin-top: 40px;
     border-top: 10px;
 }
+
+.cardHeader .btn
+{
+    position: relative;
+    padding: 5px 10px;
+    background: #47b139;
+    text-decoration: none;
+    color: var(--white);
+    border-radius: 6px;
+    
+}
+
+.btnactions #edit
+{
+    position: relative;
+    padding: 10px 15px;
+    background: var(--blue);
+    text-decoration: none;
+    color: var(--white);
+    border-radius: 10px;
+    
+    
+}
+.btnactions #info
+{
+    position: relative;
+    padding: 10px 8px;
+    background: var(--blue);
+    text-decoration: none;
+    color: var(--white);
+    border-radius: 10px;
+    
+}
+.btnactions #delete
+{
+    position: relative;
+    padding: 10px 15px;
+    background: var(--blue);
+    text-decoration: none;
+    color: var(--white);
+    border-radius: 10px;
+
+    
+}
+
+
+  
