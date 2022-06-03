@@ -2,7 +2,6 @@ import requests
 import json
 
 
-
 def makelogin(email,password):
     url = "http://localhost:5000/v1/users/login"
 

@@ -14,4 +14,4 @@ def searchTypeCommands():
 
     
     return response.json()
-    
+

@@ -5,6 +5,7 @@ import json
 
 def searchCommandSpecific(type='outros'):
     url = f"http://localhost:5000/v1/commands/search/{type}"
+    
 
     payload = {
 

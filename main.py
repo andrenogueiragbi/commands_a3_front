@@ -11,7 +11,7 @@ import json
 @app.route("/search/<type>",methods=["GET","POST"])
 def search(type):
 
-    print(type)
+
 
     if(type and "user" in session):
 
@@ -68,7 +68,7 @@ def home():
         
         user = session["user"]
 
-        data = searchCommandSpecific('linux')
+        data = searchCommandSpecific('Linux')
         types = searchTypeCommands()
         
 
@@ -126,25 +126,24 @@ def register():
 @app.route("/commandDelete/<id>/",methods=["GET", "POST"])
 def commandDelete(id):
 
-    print('>>>>>>>>>>>>>',id)
 
     if "user" in session and id:
         
         user = session["user"]
 
-        resultsave = deleteCommand(int(id))
+        id = id.split('-')
+
+        resultsave = deleteCommand(int(id[0]))
 
         if(resultsave['erro']):
 
             flash(f"O {resultsave['message']}!")
 
 
-        data = searchCommandSpecific('linux')
-        types = searchTypeCommands()
 
 
 
-        return redirect(url_for("home"))
+        return redirect(url_for(f'search',type=id[1]))
     
 
     return redirect(url_for('login'))

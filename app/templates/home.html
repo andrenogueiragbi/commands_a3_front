@@ -6,11 +6,6 @@
 	<title>Responsive Admin Dashboard | Redesign</title>
 	<link rel="stylesheet" href="../static/css/stylehome.css">
 
-
-
-
-
-
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -23,7 +18,6 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
 
-
 	<link rel="stylesheet" href="//cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
 	<link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.dataTables.min.css" />
 
@@ -31,12 +25,6 @@
 </head>
 
 <body>
-
-
-
-
-
-
 
 	<div class="container1">
 		<div class="navigation">
@@ -50,7 +38,7 @@
 					</a>
 				</li>
 				<li>
-					<a href="/search/linux">
+					<a href="/search/Linux">
 						<span class="icon">
 							<ion-icon name="logo-tux"></ion-icon>
 						</span>
@@ -58,15 +46,15 @@
 					</a>
 				</li>
 				<li>
-					<a href="/search/github">
+					<a href="/search/GitHub">
 						<span class="icon">
 							<ion-icon name="logo-github">
 						</span>
-						<span class="title">Git Hub</span>
+						<span class="title">GitHub</span>
 					</a>
 				</li>
 				<li>
-					<a href="/search/mysql">
+					<a href="/search/Mysql">
 						<span class="icon">
 							<ion-icon name="logo-buffer"></ion-icon>
 						</span>
@@ -74,7 +62,7 @@
 					</a>
 				</li>
 				<li>
-					<a href="/search/windows">
+					<a href="/search/Windows">
 						<span class="icon">
 							<ion-icon name="logo-windows"></ion-icon>
 						</span>
@@ -82,7 +70,7 @@
 					</a>
 				</li>
 				<li>
-					<a href="/search/docker">
+					<a href="/search/Docker">
 						<span class="icon">
 							<ion-icon name="boat"></ion-icon>
 						</span>
@@ -90,7 +78,7 @@
 					</a>
 				</li>
 				<li>
-					<a href="/search/rede">
+					<a href="/search/Rede">
 						<span class="icon">
 							<ion-icon name="cloud"></ion-icon>
 						</span>
@@ -106,7 +94,7 @@
 					</a>
 				</li>
 				<li>
-					<a href="/search/outros">
+					<a href="/search/Outros">
 						<span class="icon">
 							<ion-icon name="cube"></ion-icon>
 						</span>
@@ -127,20 +115,6 @@
 
 		<!--main-->
 		<div class="main">
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 			<div class="topbar">
 				<div class="toggle">
 					<ion-icon name="menu-outline"></ion-icon>
@@ -149,10 +123,6 @@
 					<img src="../static/images/user.jpg">
 				</div>
 			</div>
-
-
-
-
 
 
 			{% with messages = get_flashed_messages() %}
@@ -175,24 +145,16 @@
 			{% endif %}
 			{% endwith %}
 
-
-
-
 			<!--data list-->
 
 			<div class="details">
 				<div class="recentOrders">
 					<div class="cardHeader">
-						{% if  data[0] %}
+						{% if data[0] %}
 						<h2>{{ data[0][0]['name'] }}</h2>
 						{% endif %}
-	
-						
 
 						<h9>{{user.user.name}}</h9>
-
-
-
 
 						<!-- Button trigger modal -->
 						<button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
@@ -215,7 +177,8 @@
 											<div class="col-md-6">
 												<label for="new_login" class="form-label">Tipo:</label>
 
-												<select name="id" id="new_status" class="form-select form-control">
+												<select name="id" id="new_status" class="form-select form-control"
+													required>
 													<option value="" selected>Selecione...</option>
 													{% for type in types %}
 													<option value="{{type.id}}-{{type.name}}">{{type.name}}</option>
@@ -223,14 +186,10 @@
 												</select>
 											</div>
 
-
 											<div class="col-md-6">
 												<label class="form-label">Titulo:</label>
 												<input name="title" type="text" class="form-control">
 											</div>
-
-
-
 
 											<div class="col-md-12">
 												<label class="form-label">O que faz?:</label>
@@ -241,7 +200,6 @@
 												<label class="form-label">Linha de comando:</label>
 												<input name="commands" type="text" class="form-control">
 											</div>
-
 
 											<div class="col-md-6">
 												<label class="form-label">Criado Por:</label>
@@ -266,11 +224,6 @@
 							</div>
 						</div>
 					</div>
-					<!-- 
-					<h1>{{ data }}</h1> -->
-
-
-
 
 					<table id="TableSimple">
 						<thead>
@@ -282,9 +235,6 @@
 								<td class="none">Linha de comandos:</td>
 								<td class="none">Criado em:</td>
 								<td class="none">Autor:</td>
-
-
-
 								<td class="none">Tipo</td>
 								<td class="all">Tags</td>
 								<td class="all">Ações</td>
@@ -296,8 +246,6 @@
 							{% for item in data[0] %}
 
 							<tr>
-
-
 								<td title="+info"></td>
 								<td>{{item.id}}</td>
 								<td>{{item.title}}</td>
@@ -305,18 +253,12 @@
 								<td>{{item.commands}}</td>
 								<td>{{item.created_at}}</td>
 								<td>{{item.creator}}</td>
-
 								<td>{{item.name}}</td>
 								<td>{{item.tags}}</td>
-
-
 								<td>
-
-
-
-
 									<a href="/update/{{item.id}}" type="button" class="btn btn-outline-warning"
-										style=" border:none;" data-bs-toggle="modal" data-bs-target="#modaledit{{item.id}}">
+										style=" border:none;" data-bs-toggle="modal"
+										data-bs-target="#modaledit{{item.id}}">
 										<ion-icon size="large" name="create-outline"></ion-icon>
 									</a>
 
@@ -338,8 +280,9 @@
 															<label for="new_login" class="form-label">Tipo:</label>
 
 															<select name="id" id="new_status"
-																class="form-select form-control">
-																<option value="{{item.type_id}}-{{item.name}}" selected>{{item.name}}</option>
+																class="form-select form-control" required>
+																<option value="{{item.type_id}}-{{item.name}}" selected>
+																	{{item.name}}</option>
 																{% for type in types %}
 																<option value="{{type.id}}-{{type.name}}">{{type.name}}
 																</option>
@@ -347,25 +290,23 @@
 															</select>
 														</div>
 
-
 														<div class="col-md-6">
 															<label class="form-label">Titulo:</label>
-															<input name="title" type="text" class="form-control" value="{{item.title}}">
+															<input name="title" type="text" class="form-control"
+																value="{{item.title}}">
 														</div>
-
-
-
 
 														<div class="col-md-12">
 															<label class="form-label">O que faz?:</label>
-															<input name="description" type="text" class="form-control" value="{{item.description}}">
+															<input name="description" type="text" class="form-control"
+																value="{{item.description}}">
 														</div>
 
 														<div class="col-md-12">
 															<label class="form-label">Linha de comando:</label>
-															<input name="commands" type="text" class="form-control" value="{{item.commands}}">
+															<input name="commands" type="text" class="form-control"
+																value="{{item.commands}}">
 														</div>
-
 
 														<div class="col-md-6">
 															<label class="form-label">Criado Por:</label>
@@ -375,7 +316,8 @@
 
 														<div class="col-md-6">
 															<label class="form-label">Tags:</label>
-															<input name="tags" type="text" class="form-control" value="{{item.tags}}">
+															<input name="tags" type="text" class="form-control"
+																value="{{item.tags}}">
 														</div>
 														<div class="modal-footer">
 															<button type="button" class="btn btn-secondary"
@@ -391,14 +333,11 @@
 										</div>
 									</div>
 
-
-
-
-									<a href="/commandDelete/{{item.id}}" type="button" class="btn btn-outline-danger"
-										style=" border:none;" onclick="return confirm('Deseja realmente apagar?')">
+									<a href="/commandDelete/{{item.id}}-{{item.name}}" type="button"
+										class="btn btn-outline-danger" style=" border:none;"
+										onclick="return confirm('Deseja realmente apagar?')">
 										<ion-icon size="large" name="trash-outline"></ion-icon>
 									</a>
-
 
 								</td>
 							</tr>
@@ -408,82 +347,20 @@
 						</tbody>
 					</table>
 				</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 			</div>
-
 		</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	</div>
-
-
-
-
 
 	<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
 	<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 
-
 	<!-- datatables JavaScript-->
 	<script src='//cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js'></script>
-
 
 	<!-- datatables Custom Filtering-->
 	<script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
 
 	<script type="text/javascript" src="../static/js/main.js"></script>
-
-
-
-
-
-
-
 
 </body>
 
