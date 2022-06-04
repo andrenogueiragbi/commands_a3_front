@@ -34,7 +34,6 @@ def login():
 
     if session:
         token = session["user"]['token']
-        result = search()
 
         if(token):
             return redirect(url_for("/")) 
