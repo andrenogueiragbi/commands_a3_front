@@ -28,8 +28,7 @@ def home():
         return render_template("home.html",user=user, data = data['commands'],types = types['types'])
     
     #SE O USUÁRIO NÃO TIVER LOGADO, ENVIA PARA O TELA LOGIN
-    #return redirect(url_for('login'))
-    return render_template('home.html')
+    return redirect(url_for('login'))
 
 
 #ROTA PARA BUSCAR POR TIPO DE COMANDOS POR PARAMETRO
@@ -62,12 +61,11 @@ def search(type):
 def login():
 
     #VERIFICA SE USUÁRIO ESTAR LOGADO, SE SIM JA MANDA PARA HOME
-    if session and request.method == "GET":
+    if session:
         token = session["user"]['token']
 
         if(token):
-            return render_template("login.html")
-             
+            return redirect(url_for("/")) 
   
 
     #PEGANDO DADOS DE LOGIN
