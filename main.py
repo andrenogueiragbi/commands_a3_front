@@ -21,19 +21,10 @@ def home():
 
         return render_template("home.html",user=user, data = data['commands'],types = types['types'])
     
+
+
     print('debug heroku: não tem',session)
     return redirect(url_for('login'))
-
-@app.route("/login",methods=["GET", "POST"])
-def login():
-
-    if session:
-        token = session["user"]['token']
-
-        if(token):
-            return redirect(url_for("/")) 
-  
-
 
 
 @app.route("/search/<type>",methods=["GET","POST"])
@@ -55,8 +46,20 @@ def search(type):
             return render_template("home.html",user=user, data = data['commands'],types = types['types'])
 
 
+        return render_template("home.html",erro=True,message="Falha no servidor")
+        
     return redirect(url_for("login")) 
 
+
+@app.route("/login",methods=["GET", "POST"])
+def login():
+
+    if session:
+        token = session["user"]['token']
+
+        if(token):
+            return redirect(url_for("/")) 
+  
 
 
     if request.method == "POST":
