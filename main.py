@@ -65,7 +65,7 @@ def login():
         token = session["user"]['token']
 
         if(token):
-            return redirect(url_for("/")) 
+            return render_template("home.html") 
   
 
     #PEGANDO DADOS DE LOGIN
