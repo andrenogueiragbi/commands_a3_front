@@ -12,6 +12,7 @@ import json
 def search(type):
 
 
+    print('debug heroku: não tem',session,'e tipo', type)
 
     if(type and "user" in session):
 
@@ -73,7 +74,7 @@ def home():
 
         return render_template("home.html",user=user, data = data['commands'],types = types['types'])
     
-
+    print('debug heroku: não tem',session)
     return redirect(url_for('login'))
 
 
