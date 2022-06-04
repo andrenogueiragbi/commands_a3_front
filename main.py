@@ -61,11 +61,12 @@ def search(type):
 def login():
 
     #VERIFICA SE USUÁRIO ESTAR LOGADO, SE SIM JA MANDA PARA HOME
-    if session:
+    if session and request.method == "GET":
         token = session["user"]['token']
 
         if(token):
-            return redirect(url_for("/")) 
+            return render_template("login.html")
+             
   
 
     #PEGANDO DADOS DE LOGIN
