@@ -6,76 +6,85 @@ from app.controllers.register import makeRegister
 from app.controllers.APIcommands import searchCommandSpecific,saveCommand, deleteCommand,updateCommand
 from app.controllers.APItype import searchTypeCommands
 import json
+""" import logging
+
+logging.basicConfig(level=logging.DEBUG) """
 
 
-@app.route("/home/",methods=["GET", "POST"])
+#ROTA PRINCIPAL DIRECIONANDO PARA HOME
+@app.route("/",methods=["GET", "POST"])
 def home(): 
 
+    #VERIFICA SE USUÁRIO ESTAR LOGADO
     if "user" in session:
         
+        #PEGANDO DADOS DO USUÁRIO LOGADO
         user = session["user"]
 
+        #CHAMANDO API E PEGANDO DADOS
         data = searchCommandSpecific('Linux')
         types = searchTypeCommands()
         
-
         return render_template("home.html",user=user, data = data['commands'],types = types['types'])
     
-
-
-    print('debug heroku: não tem',session)
+    #SE O USUÁRIO NÃO TIVER LOGADO, ENVIA PARA O TELA LOGIN
     return redirect(url_for('login'))
 
 
+#ROTA PARA BUSCAR POR TIPO DE COMANDOS POR PARAMETRO
 @app.route("/search/<type>",methods=["GET","POST"])
 def search(type):
 
-
-    print('debug heroku: não tem',session,'e tipo', type)
-
+    #VERIFICA SE USUÁRIO ESTAR LOGADO E SE TEM TIPO EM PARAMETRO
     if(type and "user" in session):
 
+        #PEGANDO DADOS DO USUÁRIO LOGADO
         user = session["user"]
 
+        #CHAMANDO API E PEGANDO DADOS
         data = searchCommandSpecific(type)            
         types = searchTypeCommands()
 
-
-        if(not data["erro"]):
-            
+        #VERIFICA SE NÃO TEVE ERRO NA API EXTERNA ENTÃO APRESENTA PÁGINA E DADOS
+        if(not data["erro"] or not types["erro"]):
             return render_template("home.html",user=user, data = data['commands'],types = types['types'])
 
+        #QUANDO TEVE ERRO NA API EXTERNA.
+        flash(f"Erro: Falha no servidor!",'danger')
+        return redirect(url_for(f'search',type))
 
-        return render_template("home.html",erro=True,message="Falha no servidor")
-
+    #SE O USUÁRIO NÃO TIVER LOGADO, ENVIA PARA O TELA LOGIN
     return redirect(url_for("login")) 
 
-
+#ROTA DE FAZER LOGIN
 @app.route("/login",methods=["GET", "POST"])
 def login():
 
+    #VERIFICA SE USUÁRIO ESTAR LOGADO, SE SIM JA MANDA PARA HOME
     if session:
         token = session["user"]['token']
 
         if(token):
-            return redirect(url_for("/home/")) 
+            return redirect(url_for("/")) 
   
 
-
+    #PEGANDO DADOS DE LOGIN
     if request.method == "POST":
 
         email = request.form.get("email")
         password = request.form.get("password")
-    
+
+        #CHAMANDO A API PARA FAZER LOGIN
         statusLogin = makelogin(email,password)
 
+        #QUANDO O LOGIN É AUTORIZADO COM SUCESSO
         if not statusLogin['erro']:
 
+            #JOGA OS DADOS COMO O TOKEM PARA DENTRO DA SESSÃO
             session['user'] = statusLogin
-
             return redirect(url_for("home"))
         
-
+        #QUANDO O LOGIN NÃO É AUTORIZADO COM FALHA
         return render_template("login.html",erro=True,message=statusLogin['message'])
    
 
@@ -83,26 +92,26 @@ def login():
 
 
 
-
+#RODA PARA SAIR/LOGOUT
 @app.route("/logout",methods=["GET"])
 def logout():
 
-    print(">>>>>>>>>>>>>",session) 
-
+    #DELATA A SESSÃO DO USUARIO
     session.pop('user', None)
     return redirect(url_for('login'))
 
+#ROTA DE REDISTRO DE NOVO USUARIO   
 @app.route("/register",methods=["GET", "POST"])
 def register():
 
+    #VERIFICA SE USUÁRIO ESTAR LOGADO, SE SIM JA MANDA PARA HOME
     if session:
         token = session["user"]['token']
-
         if(token):
             return redirect(url_for("home")) 
   
 
-
+    #PEGANDO DADOS PARA NO CADASTRO DE USUÁRIO
     if request.method == "POST":
 
         name = request.form.get("name")
@@ -111,44 +120,45 @@ def register():
         coupon = request.form.get("coupon")
         company = request.form.get("company")
 
-        print(name,email,password,coupon,company)
-    
+        #print(name,email,password,coupon,company)
+
+        #CHAMANDO API PARA REGISTRAR NOVO USUÁRIO
         statusLogin = makeRegister(name,email,password,coupon,company)
 
+        #SE NÃO HAVER ERRO ENVIA PARA TELA HOME
         if not statusLogin['erro']:
 
             session['user'] = statusLogin
-
             return redirect(url_for("home"))
         
-
+        #SE HAVER ALGUM ERRO NO RETORNO DA API
         return render_template("register.html",erro=True,message=statusLogin['message'])
    
 
     return render_template("register.html")
 
 
-
+#ROTA DE APAGAR UM COMANDO USANDO ID POR PARAMETRO
 @app.route("/commandDelete/<id>/",methods=["GET", "POST"])
 def commandDelete(id):
 
-
+    #VERIFICA SE USUÁRIO ESTAR LOGADO E SE TEM ID PARA APAGAR
     if "user" in session and id:
-        
-        user = session["user"]
 
+        user = session["user"]
         id = id.split('-')
 
+        #CHAMANDO API PARA APAGAR COMANDO
         resultsave = deleteCommand(int(id[0]))
 
+        #SE TIVER ERRO DA API AO APAGAR COMANDO
         if(resultsave['erro']):
+            
+            flash(f"Erro: Comando de id: {id[0]} não pode ser apagado!",'danger')
+            return redirect(url_for(f'search',type=id[1]))
 
-            flash(f"O {resultsave['message']}!")
-
-
-
-
-
+        #SE TIVER SUCESSO API AO APAGAR COMANDO
+        flash(f"Sucesso: Comando de id: {id[0]} apagado!",'success')
         return redirect(url_for(f'search',type=id[1]))
     
 
@@ -156,14 +166,15 @@ def commandDelete(id):
 
 
 
-
+#ROTA PARA SALVAR COMANDO
 @app.route("/save",methods=["GET", "POST"])
 def saveCommands(): 
 
+    #VERIFICA SE USUÁRIO ESTAR LOGADO
     if "user" in session:
-        
         user = session["user"]
 
+        #PEGANDO DADOS DO NOVO COMANDO A SER GRAVADO
         if request.method == "POST":
 
             id = request.form.get("id").split('-')
@@ -174,46 +185,36 @@ def saveCommands():
             tags = request.form.get("tags")
             creator = request.form.get("creator")
 
-            print(pagNewComands,'...')
-
+            
+            #CHAMANDO API PARA SALVAR NO COMANDO
             resultsave = saveCommand(int(id[0]),title,description,commands,tags,creator)
 
+            #FAZENDO VALIDAÇÃO DA API
             if(resultsave['erro']):
+                flash(f"Erro: {resultsave['message']}!",'danger')
+                return redirect(url_for(f'search',type=id[1]))
 
-                flash(f"O {resultsave['message']}!")
+            else:
+                flash(f"Sucesso: Comando {title} criado!",'success')    
+                return redirect(url_for(f'search',type=id[1]))
 
-
-
-        
-            return redirect(url_for(f'search',type=id[1]))
-
-    
 
     return redirect(url_for('login'))
 
 
-
-
-
+#ROTA DE ATULIZAR COMANDO
 @app.route("/update/<idCommands>",methods=["GET", "POST"])
 def updateCommands(idCommands): 
 
+    #VERIFICA SE USUÁRIO ESTAR LOGADO
     if "user" in session:
         
         user = session["user"]
 
+        #PEGANDO DADOS PARA ATUALIZAR COMANDO
         if request.method == "POST":
 
             id = request.form.get("id").split('-')
-
-            print('array',id)
-
-            print('o id  type_id é esse:', id[0])
-            print('o id idCommands da url é esse:', idCommands)
-
-
-
-
             pagNewComands = id[1]
             title = request.form.get("title")
             description = request.form.get("description")
@@ -221,33 +222,35 @@ def updateCommands(idCommands):
             tags = request.form.get("tags")
             creator = request.form.get("creator")
 
-
+            #CHAMANDO API PARA ATUALIZAR COMANDO
             resultsave = updateCommand(idCommands,int(id[0]),title,description,commands,tags,creator)
 
-          
+            #FAZENDO VALIDAÇÃO DA API AO ATULIZAR COMANDO
             if(resultsave['erro']):
 
-                flash(f"O {resultsave['message']}!")
+                flash(f"Erro: {resultsave['message']}!",'danger')
+                return redirect(url_for(f'search',type=pagNewComands))
+            else:
 
-
-
-
-        
-            return redirect(url_for(f'search',type=pagNewComands))
+                flash(f"Sucesso: Comando {title} atualizado!",'success')
+                return redirect(url_for(f'search',type=pagNewComands))
 
     
 
     return redirect(url_for('login'))
 
 
-######################################################
 
+
+#PONTO INICIAL DO APP
 if __name__ == "__main__":
     app.run(debug=True)
 
 
-    """
-    from flask import request
+
+#ALGUNS EXEMPLOS DE PARAMETRO PARA FLASK
+"""
+from flask import request
 
 @app.route('/my-route')
 def my_route():

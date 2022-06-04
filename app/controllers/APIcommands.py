@@ -1,10 +1,12 @@
 import requests
 import json
 
+#urlservidor ='http://127.0.0.1:5001'
+urlservidor ='https://a3-commands-api.herokuapp.com'
 
 
 def searchCommandSpecific(type='outros'):
-    url = f"https://a3-commands-api.herokuapp.com/v1/commands/search/{type}"
+    url = f"{urlservidor}/v1/commands/search/{type}"
     
 
     payload = {
@@ -17,7 +19,7 @@ def searchCommandSpecific(type='outros'):
     return response.json()
 
 def saveCommand(type_id,title,description,commands,tags,creator):
-    url = f"https://a3-commands-api.herokuapp.com/v1/commands"
+    url = f"{urlservidor}/v1/commands"
 
     payload = {
         "title": title,
@@ -36,7 +38,7 @@ def saveCommand(type_id,title,description,commands,tags,creator):
 
 
 def deleteCommand(id):
-    url = f"https://a3-commands-api.herokuapp.com/v1/commands/{id}"
+    url = f"{urlservidor}/v1/commands/{id}"
 
     payload = {
 
@@ -49,7 +51,7 @@ def deleteCommand(id):
 
 
 def updateCommand(idCommands,type_id,title,description,commands,tags,creator):
-    url = f"https://a3-commands-api.herokuapp.com/v1/commands/{idCommands}"
+    url = f"{urlservidor}/v1/commands/{idCommands}"
 
     payload = {
         "title": title,
