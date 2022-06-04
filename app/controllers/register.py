@@ -4,7 +4,7 @@ import json
 
 
 def makeRegister(name,email,password,coupon,company):
-    url = "http://localhost:5000/v1/users/coupon"
+    url = "https://a3-commands-api.herokuapp.com/v1/users/coupon"
 
     payload = {
         "name": name,

@@ -3,7 +3,7 @@ import json
 
 
 def makelogin(email,password):
-    url = "http://localhost:5000/v1/users/login"
+    url = "https://a3-commands-api.herokuapp.com/v1/users/login"
 
     payload = {
         "email": email,

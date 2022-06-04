@@ -4,7 +4,7 @@ import json
 
 
 def searchCommandSpecific(type='outros'):
-    url = f"http://localhost:5000/v1/commands/search/{type}"
+    url = f"https://a3-commands-api.herokuapp.com/v1/commands/search/{type}"
     
 
     payload = {
@@ -17,7 +17,7 @@ def searchCommandSpecific(type='outros'):
     return response.json()
 
 def saveCommand(type_id,title,description,commands,tags,creator):
-    url = f"http://localhost:5000/v1/commands"
+    url = f"https://a3-commands-api.herokuapp.com/v1/commands"
 
     payload = {
         "title": title,
@@ -36,7 +36,7 @@ def saveCommand(type_id,title,description,commands,tags,creator):
 
 
 def deleteCommand(id):
-    url = f"http://localhost:5000/v1/commands/{id}"
+    url = f"https://a3-commands-api.herokuapp.com/v1/commands/{id}"
 
     payload = {
 
@@ -49,7 +49,7 @@ def deleteCommand(id):
 
 
 def updateCommand(idCommands,type_id,title,description,commands,tags,creator):
-    url = f"http://localhost:5000/v1/commands/{idCommands}"
+    url = f"https://a3-commands-api.herokuapp.com/v1/commands/{idCommands}"
 
     payload = {
         "title": title,

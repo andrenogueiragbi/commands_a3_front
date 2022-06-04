@@ -3,7 +3,7 @@ import json
 
 
 def searchTypeCommands():
-    url = "http://localhost:5000/v1/type"
+    url = "https://a3-commands-api.herokuapp.com/v1/type"
 
     payload = {
  
