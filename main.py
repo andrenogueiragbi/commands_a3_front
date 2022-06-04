@@ -28,7 +28,8 @@ def home():
         return render_template("home.html",user=user, data = data['commands'],types = types['types'])
     
     #SE O USUÁRIO NÃO TIVER LOGADO, ENVIA PARA O TELA LOGIN
-    return redirect(url_for('login'))
+    #return redirect(url_for('login'))
+    return render_template('home.html')
 
 
 #ROTA PARA BUSCAR POR TIPO DE COMANDOS POR PARAMETRO
