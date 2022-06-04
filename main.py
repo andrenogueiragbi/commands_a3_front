@@ -8,7 +8,7 @@ from app.controllers.APItype import searchTypeCommands
 import json
 
 
-@app.route("/",methods=["GET", "POST"])
+@app.route("/home/",methods=["GET", "POST"])
 def home(): 
 
     if "user" in session:
@@ -47,7 +47,7 @@ def search(type):
 
 
         return render_template("home.html",erro=True,message="Falha no servidor")
-        
+
     return redirect(url_for("login")) 
 
 
@@ -58,7 +58,7 @@ def login():
         token = session["user"]['token']
 
         if(token):
-            return redirect(url_for("/")) 
+            return redirect(url_for("/home/")) 
   
 
 
