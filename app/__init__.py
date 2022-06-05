@@ -9,6 +9,5 @@ sys.path.append(os.path.dirname(SCRIPT_DIR))
 app =  Flask(__name__)
 app.config.from_object('config')
 
-app.secret_key = os.urandom(12).hex()
 app.permanent_session_lifetime = timedelta(days=2)
 
