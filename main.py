@@ -56,7 +56,8 @@ def search(type):
         return redirect(url_for(f'search',type))
 
     #SE O USUÁRIO NÃO TIVER LOGADO, ENVIA PARA O TELA LOGIN
-    return redirect(url_for("/")) 
+    #return redirect(url_for("login")) 
+    return render_template('debug.html',session=session)
 
 #ROTA DE FAZER LOGIN
 @app.route("/login",methods=["GET", "POST"])
