@@ -37,7 +37,7 @@ def home():
 def search(type):
 
     #VERIFICA SE USUÁRIO ESTAR LOGADO E SE TEM TIPO EM PARAMETRO
-    if(type and "user" in session):
+    if(session):
 
         #PEGANDO DADOS DO USUÁRIO LOGADO
         user = session["user"]
