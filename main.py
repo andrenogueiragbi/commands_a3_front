@@ -37,7 +37,7 @@ def home():
 def search(type):
 
     #VERIFICA SE USUÁRIO ESTAR LOGADO E SE TEM TIPO EM PARAMETRO
-    if(session):
+    if(type and "user" in session):
 
         #PEGANDO DADOS DO USUÁRIO LOGADO
         user = session["user"]
@@ -56,7 +56,7 @@ def search(type):
         return redirect(url_for(f'search',type))
 
     #SE O USUÁRIO NÃO TIVER LOGADO, ENVIA PARA O TELA LOGIN
-    return redirect(url_for("login")) 
+    return redirect(url_for("/")) 
 
 #ROTA DE FAZER LOGIN
 @app.route("/login",methods=["GET", "POST"])
