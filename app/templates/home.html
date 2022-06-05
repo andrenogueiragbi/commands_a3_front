@@ -5,6 +5,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Responsive Admin Dashboard | Redesign</title>
 	<link rel="stylesheet" href="../static/css/stylehome.css">
+<!-- 	<link rel="stylesheet" href="../static/css/bootstrap.min.css"> -->
 
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -15,7 +16,7 @@
 		integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
 		crossorigin="anonymous"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
 
 
 	<link rel="stylesheet" href="//cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
@@ -26,8 +27,6 @@
 
 	<!-- datatables Custom Filtering-->
 	<script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
-
-	<script type="text/javascript" src="../static/js/main.js"></script>
 </head>
 
 <body>
@@ -217,28 +216,28 @@
 
 											<div class="col-md-6">
 												<label class="form-label">Titulo:</label>
-												<input name="title" type="text" class="form-control">
+												<input name="title" type="text" class="form-control" required required>
 											</div>
 
 											<div class="col-md-12">
 												<label class="form-label">O que faz?:</label>
-												<input name="description" type="text" class="form-control">
+												<input name="description" type="text" class="form-control" required required>
 											</div>
 
 											<div class="col-md-12">
 												<label class="form-label">Linha de comando:</label>
-												<input name="commands" type="text" class="form-control">
+												<input name="commands" type="text" class="form-control" required>
 											</div>
 
 											<div class="col-md-6">
 												<label class="form-label">Criado Por:</label>
 												<input name="creator" value="{{user.user.name}}" type="text"
-													class="form-control" readonly>
+													class="form-control" required readonly>
 											</div>
 
 											<div class="col-md-6">
 												<label class="form-label">Tags:</label>
-												<input name="tags" type="text" class="form-control">
+												<input name="tags" type="text" class="form-control" required>
 											</div>
 											<div class="modal-footer">
 												<button type="button" class="btn btn-secondary"
@@ -321,31 +320,31 @@
 
 														<div class="col-md-6">
 															<label class="form-label">Titulo:</label>
-															<input name="title" type="text" class="form-control"
+															<input name="title" type="text" class="form-control" required
 																value="{{item.title}}">
 														</div>
 
 														<div class="col-md-12">
 															<label class="form-label">O que faz?:</label>
-															<input name="description" type="text" class="form-control"
+															<input name="description" type="text" class="form-control" required
 																value="{{item.description}}">
 														</div>
 
 														<div class="col-md-12">
 															<label class="form-label">Linha de comando:</label>
-															<input name="commands" type="text" class="form-control"
+															<input name="commands" type="text" class="form-control" required
 																value="{{item.commands}}">
 														</div>
 
 														<div class="col-md-6">
 															<label class="form-label">Criado Por:</label>
 															<input name="creator" value="{{user.user.name}}" type="text"
-																class="form-control" readonly>
+																class="form-control" required readonly>
 														</div>
 
 														<div class="col-md-6">
 															<label class="form-label">Tags:</label>
-															<input name="tags" type="text" class="form-control"
+															<input name="tags" type="text" class="form-control" required
 																value="{{item.tags}}">
 														</div>
 														<div class="modal-footer">
@@ -385,8 +384,7 @@
 	<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 
 
-
-
+	<script type="text/javascript" src="../static/js/main.js"></script>
 
 </body>
 

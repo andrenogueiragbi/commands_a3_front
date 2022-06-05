@@ -1,64 +1,120 @@
 @import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap');
-*
-{
+
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Ubuntu', sans-serif;
+    font-family: 'Ubuntu', sans-serif !important;
 
 }
-:root
-{
-    --blue: rgb(130,10,209);
+ul {
+    all: unset !important;
+}
+
+
+:root {
+    --blue: rgb(130, 10, 209);
     --white: #fff;
     --grey: #f5f5f5;
     --black1: #222;
-    --black2: #999;  
+    --black2: #999;
+    --bs-blue: #0d6efd;
+    --bs-indigo: #6610f2;
+    --bs-purple: #6f42c1;
+    --bs-pink: #d63384;
+    --bs-red: #dc3545;
+    --bs-orange: #fd7e14;
+    --bs-yellow: #ffc107;
+    --bs-green: #198754;
+    --bs-teal: #20c997;
+    --bs-cyan: #0dcaf0;
+    --bs-white: #fff;
+    --bs-gray: #6c757d;
+    --bs-gray-dark: #343a40;
+    --bs-gray-100: #f8f9fa;
+    --bs-gray-200: #e9ecef;
+    --bs-gray-300: #dee2e6;
+    --bs-gray-400: #ced4da;
+    --bs-gray-500: #adb5bd;
+    --bs-gray-600: #6c757d;
+    --bs-gray-700: #495057;
+    --bs-gray-800: #343a40;
+    --bs-gray-900: #212529;
+    --bs-primary: #0d6efd;
+    --bs-secondary: #6c757d;
+    --bs-success: #198754;
+    --bs-info: #0dcaf0;
+    --bs-warning: #ffc107;
+    --bs-danger: #dc3545;
+    --bs-light: #f8f9fa;
+    --bs-dark: #212529;
+    --bs-primary-rgb: 13, 110, 253;
+    --bs-secondary-rgb: 108, 117, 125;
+    --bs-success-rgb: 25, 135, 84;
+    --bs-info-rgb: 13, 202, 240;
+    --bs-warning-rgb: 255, 193, 7;
+    --bs-danger-rgb: 220, 53, 69;
+    --bs-light-rgb: 248, 249, 250;
+    --bs-dark-rgb: 33, 37, 41;
+    --bs-white-rgb: 255, 255, 255;
+    --bs-black-rgb: 0, 0, 0;
+    --bs-body-color-rgb: 33, 37, 41;
+    --bs-body-bg-rgb: 255, 255, 255;
+    --bs-font-sans-serif: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    --bs-font-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    --bs-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
+    --bs-body-font-family: var(--bs-font-sans-serif);
+    --bs-body-font-size: 1rem;
+    --bs-body-font-weight: 400;
+    --bs-body-line-height: 1.5;
+    --bs-body-color: #212529;
+    --bs-body-bg: #fff,
+   
 }
 
 
 
-body{
+body {
     min-height: 100vh;
     overflow-x: hidden;
 }
 
 /*sobrepor bootstrap*/
-li, label, h5
-{
+li,
+label,
+h5 {
 
     color: #222;
 }
 
-.container2
-{
+.container1 {
     position: relative;
     width: 100%;
 }
-.navigation
-{
+
+.navigation {
     position: fixed;
     width: 300px;
     height: 100%;
     background: var(--blue);
     border-left: 10px solid var(--blue);
     transition: 0.5s;
-    overflow: hidden;   
+    overflow: hidden;
 }
-.navigation.active
-{
+
+.navigation.active {
     width: 75px;
 
 }
-.navigation ul
-{
+
+.navigation ul {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
 }
-.navigation ul li
-{
+
+.navigation ul li {
     position: relative;
     width: 100%;
     list-style: none;
@@ -67,21 +123,20 @@ li, label, h5
 
 
 }
+
 .navigation ul li:hover,
-.navigation ul li.hovered
-{
+.navigation ul li.hovered {
     background-color: var(--white);
 
 }
 
-.navigation ul li:nth-child(1)
-{
-  margin-bottom: 40px;
-  pointer-events: none;
+.navigation ul li:nth-child(1) {
+    margin-bottom: 40px;
+    pointer-events: none;
 
 }
-.navigation ul li a
-{
+
+.navigation ul li a {
     position: relative;
     display: block;
     width: 100%;
@@ -89,13 +144,13 @@ li, label, h5
     text-decoration: none;
     color: var(--white);
 }
-.navigation ul li:hover a ,
-.navigation ul li.hovered a 
-{
+
+.navigation ul li:hover a,
+.navigation ul li.hovered a {
     color: var(--blue);
 }
-.navigation ul li a .icon
-{
+
+.navigation ul li a .icon {
     position: relative;
     display: block;
     min-width: 60px;
@@ -104,8 +159,8 @@ li, label, h5
     text-align: center;
 
 }
-.navigation ul li a .icon ion-icon
-{
+
+.navigation ul li a .icon ion-icon {
     font-size: 1.75em;
 }
 
@@ -113,8 +168,7 @@ li, label, h5
     color: #fc0000 !important;
 }
 
-.navigation ul li a .title
-{
+.navigation ul li a .title {
     position: relative;
     display: block;
     padding: 0 10px;
@@ -126,74 +180,70 @@ li, label, h5
 
 /* curve outside*/
 .navigation ul li:hover a::before,
-.navigation ul li.hovered a::before  
-{
+.navigation ul li.hovered a::before {
     content: '';
     position: absolute;
     right: 0;
     top: -50px;
     width: 50px;
     height: 50px;
-    background-color: transparent ;
+    background-color: transparent;
     border-radius: 50%;
     box-shadow: 35px 35px 0 10px var(--white);
     pointer-events: none;
 
 }
 
-.navigation ul li:hover a::after, 
-.navigation ul li.hovered a::after 
-{
+.navigation ul li:hover a::after,
+.navigation ul li.hovered a::after {
     content: '';
     position: absolute;
     right: 0;
     bottom: -50px;
     width: 50px;
     height: 50px;
-    background-color: transparent ;
+    background-color: transparent;
     border-radius: 50%;
     box-shadow: 35px -35px 0 10px var(--white);
     pointer-events: none;
-    
+
 }
 
 /*main*/
 
-.main
-{
+.main {
     position: absolute;
     width: calc(100% -300px);
     left: 300px;
     right: 5px;
-    min-height:100vh;
+    min-height: 100vh;
     background: var(--white);
     transition: 0.5s;
 }
 
-.main.active
-{
-   width: calc(100% -80px);
-   left: 80px;
-   
+.main.active {
+    width: calc(100% -80px);
+    left: 80px;
+
 }
 
-.topbar
-{
+.topbar {
     width: 100%;
-    height: 60px ;
-    display: flex ;
-    justify-content: space-between ;
-    align-items: center ;
+    height: 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     padding: 0 10px;
-   
 
-    
+
+
 
 }
-.toggle{
+
+.toggle {
     position: relative;
     top: 0;
-    width: 60px;   
+    width: 60px;
     height: 60px;
     display: flex;
     justify-content: center;
@@ -203,7 +253,7 @@ li, label, h5
 
 }
 
-.search{
+.search {
     position: relative;
     width: 400px;
     margin: 0 10px;
@@ -211,20 +261,18 @@ li, label, h5
 }
 
 
-.search label
-{
+.search label {
     position: relative;
     width: 100%;
 
 }
 
 
-.search label input
-{
+.search label input {
     width: 100%;
     height: 40px;
     border-radius: 40px;
-    padding:5x 20px;
+    padding: 5x 20px;
     padding-left: 35px;
     font-size: 18px;
     outline: none;
@@ -233,8 +281,7 @@ li, label, h5
 
 
 
-.search label ion-icon
-{
+.search label ion-icon {
     position: absolute;
     top: 0;
     left: 10px;
@@ -242,8 +289,7 @@ li, label, h5
 }
 
 
-.user
-{
+.user {
     position: relative;
     width: 40px;
     height: 40px;
@@ -252,8 +298,7 @@ li, label, h5
     cursor: pointer;
 }
 
-.user img
-{
+.user img {
     position: absolute;
     top: 0;
     left: 0;
@@ -265,7 +310,7 @@ li, label, h5
 
 
 
-.details{
+.details {
     position: relative;
     width: 150%;
     padding: 20px;
@@ -273,32 +318,31 @@ li, label, h5
     grid-template-columns: 2fr 1fr;
     grid-gap: 30px;
     /* margin-top: 10px; */
-    
+
 }
-.details .recentOrders{
+
+.details .recentOrders {
     position: relative;
     display: grid;
     min-height: 400px;
     background: var(--white);
     padding: 20px;
-    box-shadow: 4px 5px 32px 15px rgba(0,0,0,0.31);
+    box-shadow: 4px 5px 32px 15px rgba(0, 0, 0, 0.31);
     border-radius: 20px;
-    
-    
+
+
 }
 
-.cardHeader
-{
+.cardHeader {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
     margin-bottom: 35px;
-    
+
 }
 
 /*nome da categoria do comandos*/
-.cardHeader h2
-{
+.cardHeader h2 {
     font-weight: 600;
     color: var(--white);
     position: relative;
@@ -311,50 +355,44 @@ li, label, h5
 
 
 
-.details table
-{
+.details table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 10px;
-    
+
 }
 
-.details table thead td
-{
+.details table thead td {
     font-weight: 600;
 }
 
 
 
 
-.datails .recentOrders table tr
-{
+.datails .recentOrders table tr {
     color: var(--black1) !important;
-    border-bottom: 1px solid rgb(0,0,0,0.1) !important;
+    border-bottom: 1px solid rgb(0, 0, 0, 0.1) !important;
     text-align: center !important;
 }
 
 
-.details .recentOrders table tr
-{
+.details .recentOrders table tr {
     color: var(--black1);
-    border-bottom: 1px solid rgba(0,0,0,0.1) ;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
-.details .recentOrders table tr:last-child
-{
+.details .recentOrders table tr:last-child {
     border-bottom: none;
 }
-.details .recentOrders table tbody tr:hover
-{
+
+.details .recentOrders table tbody tr:hover {
     background: var(--blue);
     color: var(--white);
 }
 
-.details .recentOrders table tr td
-{
+.details .recentOrders table tr td {
     padding: 10px;
-    
+
 }
 
 
@@ -363,86 +401,78 @@ li, label, h5
 
 
 
-.details .recentOrders table tr td:last-child
-{
+.details .recentOrders table tr td:last-child {
     text-align: left;
 }
 
-.details .recentOrders table tr td:nth-child(2)
-{
+.details .recentOrders table tr td:nth-child(2) {
     text-align: center;
 }
 
-.details .recentOrders table tr td:nth-child(3)
-{
+.details .recentOrders table tr td:nth-child(3) {
     text-align: center;
 }
 
-.status.delivered
-{
+.status.delivered {
     padding: 2px 4px;
     background: #8de02c;
     color: var(--white);
     border-radius: 4px;
     font-size: 14px;
     font-weight: 500;
-    
+
 }
 
 
-.status.pending
-{
+.status.pending {
     padding: 2px 4px;
     background: #f9ca3f;
     color: var(--white);
     border-radius: 4px;
     font-size: 14px;
     font-weight: 500;
-    
+
 }
-.status.return
-{
+
+.status.return {
     padding: 2px 4px;
     background: #f00;
     color: var(--white);
     border-radius: 4px;
     font-size: 14px;
     font-weight: 500;
-    
+
 }
 
-.status.inProgress
-{
+.status.inProgress {
     padding: 2px 4px;
     background: #1795ce;
     color: var(--white);
     border-radius: 4px;
     font-size: 14px;
     font-weight: 500;
-    
+
 }
 
-.recentCustomers
-{
+.recentCustomers {
     position: relative;
     display: grid;
     min-height: 500px;
     padding: 20px;
     background: var(--white);
-    box-shadow: 0 7px 25px rgba(0,0,0,0.08);
+    box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
     border-radius: 20px;
 }
 
-.recentCustomers .imgBx
-{
+.recentCustomers .imgBx {
     position: relative;
     width: 40px;
     height: 40px;
     border-radius: 50%;
     overflow: hidden;
 }
-.recentCustomers .imgBx img
-{
+
+.recentCustomers .imgBx img {
     position: absolute;
     top: 0;
     left: 0;
@@ -451,127 +481,120 @@ li, label, h5
     object-fit: cover;
 }
 
-.recentCustomers table tr:hover
-{
+.recentCustomers table tr:hover {
     background: var(--blue);
     color: var(--white);
 }
 
-.recentCustomers table tr td
-{
+.recentCustomers table tr td {
     padding: 12px 10px;
-    
+
 }
 
-.recentCustomers table tr td h4
-{
+.recentCustomers table tr td h4 {
     font-size: 16px;
     font-weight: 500;
     line-height: 1.2em;
 }
 
-.recentCustomers table tr td h4 span
-{
+.recentCustomers table tr td h4 span {
     font-size: 14px;
     color: var(--black2);
 }
-.recentCustomers table tr:hover
-{
+
+.recentCustomers table tr:hover {
     background: var(--blue);
     color: var(--white);
 }
 
-.recentCustomers table tr:hover td h4 span
-{
+.recentCustomers table tr:hover td h4 span {
     color: var(--white);
-    
+
 }
 
 /* responsive*/
-@media (max-width: 991px) 
-{
-    .navigation{
+@media (max-width: 991px) {
+    .navigation {
         left: -300px;
-    } 
-    .navigation.active
-    {
+    }
+
+    .navigation.active {
         width: 300px;
         left: 0;
     }
-    
-    
-    .main
-    {
+
+
+    .main {
         width: 100%;
         left: 0;
     }
-    .main.active
-    {
+
+    .main.active {
         left: 300px;
-        
+
     }
-    .cardBox
-    {
-        grid-template-columns: repeat(2,1fr);
+
+    .cardBox {
+        grid-template-columns: repeat(2, 1fr);
     }
 }
 
 
-@media (max-width: 768px) 
-{
-    .details
-    {
-        grid-template-columns: repeat(1,1fr);
-        
+@media (max-width: 768px) {
+    .details {
+        grid-template-columns: repeat(1, 1fr);
+
     }
-    .recentOrders{
+
+    .recentOrders {
         overflow-x: auto;
     }
-    .status.inProgress{
+
+    .status.inProgress {
         white-space: nowrap;
     }
 }
 
 
-@media (max-width: 480px) 
-{
-    .cardBox{
-        grid-template-columns: repeat(1,1fr) ;
+@media (max-width: 480px) {
+    .cardBox {
+        grid-template-columns: repeat(1, 1fr);
     }
-    
-    .cardHeader h2
-    {
+
+    .cardHeader h2 {
         font-size: 20px;
     }
-    .user{
+
+    .user {
         min-width: 40px;
     }
-    .navigation{
+
+    .navigation {
         width: 100%;
         left: -100%;
         z-index: 1000;
     }
-    .navigation.active{
+
+    .navigation.active {
         width: 100%;
         left: 0;
-        
+
     }
-    .toggle
-    {
+
+    .toggle {
         z-index: 10001;
     }
-    
-    .main.active .toggle
-    {
-        
+
+    .main.active .toggle {
+
         position: fixed;
         right: 0;
         left: initial;
         color: var(--white);
-        
+
     }
- 
-    
+
+
 }
 
 
@@ -581,10 +604,9 @@ li, label, h5
 
 
 /*titulo do comando*/
-.commadsList .commandsTitle
-{
+.commadsList .commandsTitle {
 
- 
+
     padding: 5px 10px;
     background: var(--blue);
     color: var(--white);
@@ -594,10 +616,9 @@ li, label, h5
 
 /**/
 
-.commadsList .commandsTitle
-{
+.commadsList .commandsTitle {
 
- 
+
     padding: 5px 10px;
     background: var(--blue);
     color: var(--white);
@@ -607,7 +628,7 @@ li, label, h5
 
 
 /*campo do comando ls -lha*/
-.example .commads{
+.example .commads {
     color: var(--blue);
     margin: 4px;
     border-radius: 20px;
@@ -621,15 +642,14 @@ li, label, h5
 
 
 /*Quadro geral*/
-.example
-{
+.example {
     position: relative;
     background: var(--black1);
     padding: 30px;
     border-radius: 20px;
     color: #999;
     justify-content: space-between;
-    cursor:pointer;
+    cursor: pointer;
     box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
     margin-top: 10px;
 }
@@ -637,50 +657,49 @@ li, label, h5
 
 
 /*decrição*/
-.commadsList p
-{
+.commadsList p {
     margin-top: 10px;
     border-right: 30px;
 }
 
 
-.btnactions{
+.btnactions {
     width: 100%;
-    height: 60px ;
-    display: flex ;
-    justify-content: center ;
-    align-items: center ;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     padding: 0 10px;
     margin-top: 15px;
-   
+
 
 }
 
 
 
 
-.btnactions button#edit:hover{
+.btnactions button#edit:hover {
     background: rgb(253, 152, 70);
     border-radius: 10px;
     color: #f5f5f5;
     font-size: large;
 }
 
-.btnactions button#delete:hover{
+.btnactions button#delete:hover {
     background: red;
     border-radius: 10px;
     color: #f5f5f5;
     font-size: large;
 }
 
-.btnactions button#info:hover{
+.btnactions button#info:hover {
     background: blue;
     border-radius: 10px;
     color: #f5f5f5;
     font-size: large;
 }
 
-.cardHeader #new:hover{
+.cardHeader #new:hover {
     background: #47b139;
     padding: 5px 10px;
     color: #f5f5f5;
@@ -689,54 +708,50 @@ li, label, h5
 
 
 
-.btnactions button ion-icon
-{
+.btnactions button ion-icon {
     top: 0;
     left: 10px;
     font-size: 1.3em
 }
 
-.line
-{
+.line {
     background: var(--black2);
     margin-top: 40px;
     border-top: 10px;
 }
 
-.cardHeader .btn
-{
+.cardHeader .btn {
     position: relative;
     padding: 5px 10px;
     background: #47b139;
     text-decoration: none;
     color: var(--white);
     border-radius: 6px;
-    
+
 }
 
-.btnactions #edit
-{
+.btnactions #edit {
     position: relative;
     padding: 10px 15px;
     background: var(--blue);
     text-decoration: none;
     color: var(--white);
     border-radius: 10px;
-    
-    
+
+
 }
-.btnactions #info
-{
+
+.btnactions #info {
     position: relative;
     padding: 10px 8px;
     background: var(--blue);
     text-decoration: none;
     color: var(--white);
     border-radius: 10px;
-    
+
 }
-.btnactions #delete
-{
+
+.btnactions #delete {
     position: relative;
     padding: 10px 15px;
     background: var(--blue);
@@ -744,8 +759,6 @@ li, label, h5
     color: var(--white);
     border-radius: 10px;
 
-    
+
 }
 
-
-  
