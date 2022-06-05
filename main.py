@@ -88,7 +88,7 @@ def login():
         return render_template("login.html",erro=True,message=statusLogin['message'])
    
 
-    return redirect(url_for("login"))
+    return render_template("login.html")
 
 
 
