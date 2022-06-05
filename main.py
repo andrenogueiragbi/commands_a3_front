@@ -46,9 +46,6 @@ def search(type):
         data = searchCommandSpecific(type)            
         types = searchTypeCommands()
 
-        print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>debug aqui')
-
-        time.sleep(5)
 
         #VERIFICA SE NÃO TEVE ERRO NA API EXTERNA ENTÃO APRESENTA PÁGINA E DADOS
         if(not data["erro"] or not types["erro"]):
@@ -87,7 +84,15 @@ def login():
 
             #JOGA OS DADOS COMO O TOKEM PARA DENTRO DA SESSÃO
             session['user'] = statusLogin
-            return redirect(url_for("home"))
+            user = session["user"]
+
+            data = searchCommandSpecific('Linux')            
+            types = searchTypeCommands()
+
+            return render_template("home.html",user=user, data = data['commands'],types = types['types'])
+
+
+            
         
         #QUANDO O LOGIN NÃO É AUTORIZADO COM FALHA
         return render_template("login.html",erro=True,message=statusLogin['message'])
