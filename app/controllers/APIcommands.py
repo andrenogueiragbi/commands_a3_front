@@ -1,8 +1,8 @@
 import requests
 import json
 
-urlservidor = 'http://127.0.0.1:5001'
-#urlservidor ='https://a3-commands-api.herokuapp.com'
+#urlservidor = 'http://127.0.0.1:5001'
+urlservidor ='https://a3-commands-api.herokuapp.com'
 
 
 def searchCommandSpecific(type, token):
