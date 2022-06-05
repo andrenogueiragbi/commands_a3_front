@@ -6,6 +6,7 @@ from app.controllers.register import makeRegister
 from app.controllers.APIcommands import searchCommandSpecific,saveCommand, deleteCommand,updateCommand
 from app.controllers.APItype import searchTypeCommands
 import json
+import time
 """ import logging
 
 logging.basicConfig(level=logging.DEBUG) """
@@ -44,6 +45,10 @@ def search(type):
         #CHAMANDO API E PEGANDO DADOS
         data = searchCommandSpecific(type)            
         types = searchTypeCommands()
+
+        print('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>debug aqui')
+
+        time.sleep(5)
 
         #VERIFICA SE NÃO TEVE ERRO NA API EXTERNA ENTÃO APRESENTA PÁGINA E DADOS
         if(not data["erro"] or not types["erro"]):
