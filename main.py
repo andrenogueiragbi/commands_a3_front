@@ -5,11 +5,35 @@ from app.controllers.login import makelogin
 from app.controllers.register import makeRegister
 from app.controllers.APIcommands import searchCommandSpecific, saveCommand, deleteCommand, updateCommand
 from app.controllers.APItype import searchTypeCommands
+from app.controllers.APiuser import searchUser
 import json
 import time
 """ import logging
 
 logging.basicConfig(level=logging.DEBUG) """
+
+
+# ROTA PRINCIPAL DIRECIONANDO PARA HOME
+@app.route("/config", methods=["GET", "POST"])
+def config():
+    # VERIFICA SE USUÁRIO ESTAR LOGADO
+    if "user" in session:
+
+        # PEGANDO DADOS DO USUÁRIO LOGADO
+        user = session["user"]
+        token = user.get('token')
+
+        # CHAMANDO API E PEGANDO DADOS
+        data = searchCommandSpecific('Linux', token)
+        types = searchTypeCommands(token)
+        dataUsers = searchUser(token)   
+
+       
+
+        return render_template("config.html", user=user, data=data['commands'],dataUsers=dataUsers['users'] ,types=types['types'])
+
+    # SE O USUÁRIO NÃO TIVER LOGADO, ENVIA PARA O TELA LOGIN
+    return redirect(url_for('login'))
 
 
 # ROTA PRINCIPAL DIRECIONANDO PARA HOME

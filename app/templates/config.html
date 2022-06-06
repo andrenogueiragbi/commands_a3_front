@@ -134,7 +134,8 @@
 									<li class="nav-item dropdown no-arrow">
 										<a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
 											data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-											<span id="nome_usu" style="text-transform: uppercase;" >{{user.user.name}}</span>
+											<span id="nome_usu"
+												style="text-transform: uppercase;">{{user.user.name}}</span>
 											<img class="img-profile rounded-circle" width="40"
 												src="../static/images/user.jpg">
 										</a>
@@ -150,21 +151,18 @@
 													<ion-icon name="log-out-outline"></ion-icon>
 												</span>Sair
 											</a>
-											<a class="dropdown-item" data-toggle="modal"
-												data-target="#perfilModal">
+											<a class="dropdown-item" data-toggle="modal" data-target="#perfilModal">
 												<i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
 												<ion-icon name="person-outline"></ion-icon>Perfil
 											</a>
-											
+
 											{% if user.user.level == 2 %}
-											<a class="dropdown-item" href={{ url_for('config') }} >
+											<a class="dropdown-item" href="#" data-toggle="modal"
+												data-target="#logoutModal">
 												<i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
 												<ion-icon name="settings-outline"></ion-icon>Configurações
 											</a>
 											{% endif %}
-											
-
-
 										</div>
 									</li>
 								</div>
@@ -175,88 +173,66 @@
 
 
 
-				    <!-- Logout Modal-->
-					<div class="modal fade" id="perfilModal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-						<div class="modal-dialog" role="document">
-							<div class="modal-content">
-								<div class="modal-header">
-									<h5 class="modal-title" id="exampleModalLabel">Editar Seu Perfil:</h5>
-								</div>
-								<div class="modal-body">
+				<!-- Perfil Modal-->
+				<div class="modal fade" id="perfilModal" data-backdrop="static" data-keyboard="false" tabindex="-1"
+					aria-labelledby="staticBackdropLabel" aria-hidden="true">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="exampleModalLabel">Editar Seu Perfil:</h5>
+							</div>
+							<div class="modal-body">
 
-									<form method="post" action="#" class="row g-3">
-										<div class="col-md-12">
-											<label class="form-label">Nome:</label>
-											<input name="description" value="{{user.user.name}}" type="text" class="form-control" required
-												required>
-										</div>
+								<form method="post" action="#" class="row g-3">
+									<div class="col-md-12">
+										<label class="form-label">Nome:</label>
+										<input name="description" value="{{user.user.name}}" type="text"
+											class="form-control" required required>
+									</div>
 
-										<div class="col-md-12">
-											<label class="form-label">Email:</label>
-											<input name="email" value="{{user.user.email}}" type="text" class="form-control" required>
-										</div>
+									<div class="col-md-12">
+										<label class="form-label">Email:</label>
+										<input name="email" value="{{user.user.email}}" type="text" class="form-control"
+											required>
+									</div>
 
-										<div class="col-md-12">
-											<label class="form-label">Senha:</label>
-											<input name="name" type="text"
-												class="form-control" placeholder="**************************">
-										</div>
+									<div class="col-md-12">
+										<label class="form-label">Senha:</label>
+										<input name="name" type="text" class="form-control"
+											placeholder="**************************">
+									</div>
 
-										<div class="col-md-12">
-											<label class="form-label">Nível:</label>
-											{% if user.user.level == 2 %}
-											<input name="level" value="Administrador" type="text" class="form-control" required readonly>
-											{% else %}
-											<input name="level" value="Simples" type="text" class="form-control" required readonly>
-											{% endif %}
-										</div>
+									<div class="col-md-12">
+										<label class="form-label">Nível:</label>
+										{% if user.user.level == 2 %}
+										<input name="level" value="Administrador" type="text" class="form-control"
+											required readonly>
+										{% else %}
+										<input name="level" value="Simples" type="text" class="form-control" required
+											readonly>
+										{% endif %}
+									</div>
 
-										<div class="col-md-12">
-											<label class="form-label">Empresa:</label>
-											<input name="company" value="{{user.user.company}}" type="text" class="form-control" required readonly>
-										</div>
+									<div class="col-md-12">
+										<label class="form-label">Empresa:</label>
+										<input name="company" value="{{user.user.company}}" type="text"
+											class="form-control" required readonly>
+									</div>
 
-										<div class="modal-footer">
-											<button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
-											<button type="submit" class="btn btn-primary">Salvar</button>
-										</div>
-									</form>
-								</div>
-
+									<div class="modal-footer">
+										<button class="btn btn-secondary" type="button"
+											data-dismiss="modal">Cancelar</button>
+										<button type="submit" class="btn btn-primary">Salvar</button>
+									</div>
+								</form>
 							</div>
 						</div>
 					</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+				</div>
 			</div>
 
 
-
+			<!-- 			<h1>{{dataUsers}}</h1> -->
 
 
 			<!--class="alert alert-danger d-flex align-items-center"-->
@@ -307,69 +283,76 @@
 			<div class="details">
 				<div class="recentOrders">
 					<div class="cardHeader">
-						{% if data[0] %}
-						<h2>{{ data[0][0]['name'] }}</h2>
-						{% endif %}
 
-
+						<h2>Configurações</h2>
 
 
 						<!-- Button trigger modal -->
-						<button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
-							<ion-icon name="add-outline"></ion-icon>NOVO
+						<button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#ModalNovoUser">
+							<ion-icon name="add-outline"></ion-icon>NOVO USUÁRIO
 						</button>
 
-						<!-- Modal -->
-						<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+						<!-- Modal editar user -->
+						<div class="modal fade" id="ModalNovoUser" tabindex="-1" aria-labelledby="exampleModalLabel"
 							aria-hidden="true">
-							<div class="modal-dialog modal-lg" role="document">
+							<div class="modal-dialog modal-md" role="document">
 								<div class="modal-content">
 									<div class="modal-header">
-										<h5 class="modal-title" id="exampleModalLabel">Cadastro Novo Comando</h5>
+										<h5 class="modal-title" id="exampleModalLabel">Cadastro Novo Usuário</h5>
 										<button type="button" class="btn-close" data-bs-dismiss="modal"
 											aria-label="Close"></button>
 									</div>
 									<div class="modal-body">
-										<form method="post" action="/save" class="row g-3">
+										<form method="post" action="/saveUser" class="row g-3">
 
-											<div class="col-md-6">
-												<label for="new_login" class="form-label">Tipo:</label>
+											<div class="col-md-12">
+												<label class="form-label">Nome:</label>
+												<input name="description" type="text"
+													class="form-control" required>
+											</div>
+		
+											<div class="col-md-12">
+												<label class="form-label">Email:</label>
+												<input name="email" type="text" class="form-control"
+													required>
+											</div>
+		
+											<div class="col-md-12">
+												<label class="form-label">Senha:</label>
+												<input name="passwd" type="text" class="form-control"
+													placeholder="**************************" required>
+											</div>
+		
+
+
+
+											<div class="col-md-12">
+												<label for="new_login" class="form-label">Nivel:</label>
 
 												<select name="id" id="new_status" class="form-select form-control"
 													required>
 													<option value="" selected>Selecione...</option>
-													{% for type in types %}
-													<option value="{{type.id}}-{{type.name}}">{{type.name}}</option>
-													{% endfor %}
+													
+													<option value="1">Administrador</option>
+													<option value="2">Simples</option>
+													
 												</select>
 											</div>
 
-											<div class="col-md-6">
-												<label class="form-label">Titulo:</label>
-												<input name="title" type="text" class="form-control" required required>
-											</div>
 
+
+
+
+
+
+
+		
 											<div class="col-md-12">
-												<label class="form-label">O que faz?:</label>
-												<input name="description" type="text" class="form-control" required
-													required>
+												<label class="form-label">Empresa:</label>
+												<input name="company" type="text"
+													class="form-control" required>
 											</div>
 
-											<div class="col-md-12">
-												<label class="form-label">Linha de comando:</label>
-												<input name="commands" type="text" class="form-control" required>
-											</div>
-
-											<div class="col-md-6">
-												<label class="form-label">Criado Por:</label>
-												<input name="creator" value="{{user.user.name}}" type="text"
-													class="form-control" required readonly>
-											</div>
-
-											<div class="col-md-6">
-												<label class="form-label">Tags:</label>
-												<input name="tags" type="text" class="form-control" required>
-											</div>
 											<div class="modal-footer">
 												<button type="button" class="btn btn-secondary"
 													data-bs-dismiss="modal">Fechar</button>
@@ -389,13 +372,12 @@
 							<tr>
 								<td class="all" style="text-align: center ;">+</td>
 								<td class="all">#</td>
-								<td class="all">Titulo</td>
-								<td class="none">O que faz?:</td>
-								<td class="none">Linha de comandos:</td>
-								<td class="none">Criado em:</td>
-								<td class="none">Autor:</td>
-								<td class="none">Tipo</td>
-								<td class="all">Tags</td>
+								<td class="all">Nome</td>
+								<td class="none">Email</td>
+								<td class="none">Level</td>
+								<td class="none">Empresa</td>
+								<td class="none">Ativo</td>
+								<td class="none">Criado</td>
 								{% if user.user.level == 2 %}
 								<td class="all">Ações</td>
 								{% endif %}
@@ -404,28 +386,27 @@
 						<tbody id="corpo">
 
 
-							{% for item in data[0] %}
+							{% for dataUser in dataUsers %}
 
 							<tr>
 								<td title="+info"></td>
-								<td>{{item.id}}</td>
-								<td>{{item.title}}</td>
-								<td>{{item.description}}</td>
-								<td>{{item.commands}}</td>
-								<td>{{item.created_at}}</td>
-								<td>{{item.creator}}</td>
-								<td>{{item.name}}</td>
-								<td>{{item.tags}}</td>
+								<td>{{dataUser.id}}</td>
+								<td>{{dataUser.name}}</td>
+								<td>{{dataUser.email}}</td>
+								<td>{{dataUser.level}}</td>
+								<td>{{dataUser.company}}</td>
+								<td>{{dataUser.active}}</td>
+								<td>{{dataUser.createdAt}}</td>
 								{% if user.user.level == 2 %}
 								<td>
-									<a href="/update/{{item.id}}" type="button" class="btn btn-outline-warning"
+									<a href="/update/{{dataUser.id}}" type="button" class="btn btn-outline-warning"
 										style=" border:none;" data-bs-toggle="modal"
-										data-bs-target="#modaledit{{item.id}}">
+										data-bs-target="#modaledit{{dataUser.id}}">
 										<ion-icon size="large" name="create-outline"></ion-icon>
 									</a>
 
 
-									<div class="modal fade" id="modaledit{{item.id}}" tabindex="-1"
+									<div class="modal fade" id="modaledit{{dataUser.id}}" tabindex="-1"
 										aria-labelledby="exampleModalLabel" aria-hidden="true">
 										<div class="modal-dialog modal-lg" role="document">
 											<div class="modal-content">
@@ -436,50 +417,39 @@
 														aria-label="Close"></button>
 												</div>
 												<div class="modal-body">
-													<form method="post" action="/update/{{item.id}}" class="row g-3">
+													<form method="post" action="/update/{{dataUser.id}}"
+														class="row g-3">
 
-														<div class="col-md-6">
-															<label for="new_login" class="form-label">Tipo:</label>
 
-															<select name="id" id="new_status"
-																class="form-select form-control" required>
-																<option value="{{item.type_id}}-{{item.name}}" selected>
-																	{{item.name}}</option>
-																{% for type in types %}
-																<option value="{{type.id}}-{{type.name}}">{{type.name}}
-																</option>
-																{% endfor %}
-															</select>
-														</div>
 
 														<div class="col-md-6">
 															<label class="form-label">Titulo:</label>
 															<input name="title" type="text" class="form-control"
-																required value="{{item.title}}">
+																required value="">
 														</div>
 
 														<div class="col-md-12">
 															<label class="form-label">O que faz?:</label>
 															<input name="description" type="text" class="form-control"
-																required value="{{item.description}}">
+																required value="">
 														</div>
 
 														<div class="col-md-12">
 															<label class="form-label">Linha de comando:</label>
 															<input name="commands" type="text" class="form-control"
-																required value="{{item.commands}}">
+																required value="">
 														</div>
 
 														<div class="col-md-6">
 															<label class="form-label">Criado Por:</label>
-															<input name="creator" value="{{user.user.name}}" type="text"
+															<input name="creator" value="" type="text"
 																class="form-control" required readonly>
 														</div>
 
 														<div class="col-md-6">
 															<label class="form-label">Tags:</label>
 															<input name="tags" type="text" class="form-control" required
-																value="{{item.tags}}">
+																value="">
 														</div>
 														<div class="modal-footer">
 															<button type="button" class="btn btn-secondary"
@@ -487,8 +457,6 @@
 															<button type="submit"
 																class="btn btn-primary">Salvar</button>
 														</div>
-
-
 													</form>
 												</div>
 
@@ -496,7 +464,7 @@
 										</div>
 									</div>
 
-									<a href="/commandDelete/{{item.id}}-{{item.name}}" type="button"
+									<a href="/commandDelete/{{dataUser.id}}" type="button"
 										class="btn btn-outline-danger" style=" border:none;"
 										onclick="return confirm('Deseja realmente apagar?')">
 										<ion-icon size="large" name="trash-outline"></ion-icon>
@@ -516,7 +484,7 @@
 	</div>
 
 
-	
+
 
 
 

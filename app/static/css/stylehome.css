@@ -10,7 +10,9 @@
 ul {
     all: unset !important;
 }
-
+li {
+    list-style-type: none;
+  }
 
 :root {
     --blue: rgb(130, 10, 209);
