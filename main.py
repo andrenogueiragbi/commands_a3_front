@@ -2,7 +2,7 @@ import re
 from app import app
 from flask import redirect, url_for, render_template, request, session, flash
 from app.controllers.login import makelogin
-from app.controllers.register import makeRegister
+from app.controllers.register import makeRegister,createTicket
 from app.controllers.APIcommands import searchCommandSpecific, saveCommand, deleteCommand, updateCommand
 from app.controllers.APItype import searchTypeCommands
 from app.controllers.APiuser import searchUser,saveNewUser,deleteUser,updateUser,searchUserId
@@ -12,8 +12,41 @@ import time
 
 logging.basicConfig(level=logging.DEBUG) """
 
+# ROTA DE CRIAR NOVO TICKET
+@app.route("/newticket/", methods=["GET", "POST"])
+def newticket():
 
-# ROTA DE ATULIZAR COMANDO
+    # VERIFICA SE USUÁRIO ESTAR LOGADO
+    if "user" in session:
+
+        user = session["user"]
+        token = user.get('token')
+
+        # PEGANDO DADOS PARA ATUALIZAR COMANDO
+        if request.method == "POST":
+
+            email = request.form.get("email")
+
+            # CHAMANDO API PARA CRIAR TIKET
+            resultsave = createTicket(email,token)
+
+
+
+            # FAZENDO VALIDAÇÃO DA API DEPOIS DE CRIADO TICKET
+            if(resultsave['erro']):
+                flash(f"Erro: {resultsave['message']}!", 'danger')
+                return redirect(url_for(f'config'))
+            else:
+
+                flash(f"Sucesso: Ticket criado pra o {resultsave['tiketNew']['email_user']} - NÚMERO: {resultsave['tiketNew']['number']}", 'success')
+                return redirect(url_for(f'config'))
+
+    return redirect(url_for('login'))
+
+
+
+
+# ROTA DE ATULIZAR PERFIL
 @app.route("/userUpdatePerfil/<idUser>", methods=["GET", "POST"])
 def userUpdatePerfil(idUser):
 
@@ -23,7 +56,7 @@ def userUpdatePerfil(idUser):
         user = session["user"]
         token = user.get('token')
 
-        # PEGANDO DADOS PARA ATUALIZAR COMANDO
+        # PEGANDO DADOS PARA ATUALIZAR PERFIL
         if request.method == "POST":
 
             name = request.form.get("name")
@@ -36,10 +69,10 @@ def userUpdatePerfil(idUser):
             print('aquie estão os dados',idUser, name,email,password,level,company,token)
 
 
-            # CHAMANDO API PARA ATUALIZAR COMANDO
+            # CHAMANDO API PARA ATUALIZAR PERFIL
             resultsave = updateUser(idUser, name,email,password,level,company,token)
 
-            # FAZENDO VALIDAÇÃO DA API AO ATULIZAR COMANDO
+            # FAZENDO VALIDAÇÃO DA API AO ATUALIZAR PERFIL
             if(resultsave['erro']):
                 flash(f"Erro: {resultsave['message']}!", 'danger')
                 return redirect(url_for(f'config'))
@@ -52,7 +85,7 @@ def userUpdatePerfil(idUser):
 
 
 
-# ROTA DE ATULIZAR COMANDO
+# ROTA DE ATULIZAR USUÁRIO
 @app.route("/updateUser/<idUser>", methods=["GET", "POST"])
 def userUpdate(idUser):
 
@@ -62,7 +95,7 @@ def userUpdate(idUser):
         user = session["user"]
         token = user.get('token')
 
-        # PEGANDO DADOS PARA ATUALIZAR COMANDO
+        # PEGANDO DADOS PARA ATUALIZAR USUÁRIO
         if request.method == "POST":
 
         
@@ -73,10 +106,10 @@ def userUpdate(idUser):
             company = request.form.get("company")
 
 
-            # CHAMANDO API PARA ATUALIZAR COMANDO
+            # CHAMANDO API PARA ATUALIZAR USUÁRIO
             resultsave = updateUser(idUser, name,email,password,level,company,token)
 
-            # FAZENDO VALIDAÇÃO DA API AO ATULIZAR COMANDO
+            # FAZENDO VALIDAÇÃO DA API AO ATULIZAR USUÁRIO
             if(resultsave['erro']):
 
                 flash(f"Erro: {resultsave['message']}!", 'danger')
@@ -92,8 +125,7 @@ def userUpdate(idUser):
 
 
 
-
-#ROTA DE APAGAR UM COMANDO USANDO ID POR PARAMETRO
+#ROTA DE APAGAR USUÁRIO
 @app.route("/userDelete/<id>/", methods=["GET", "POST"])
 def userDelete(id):
 
@@ -103,19 +135,18 @@ def userDelete(id):
         user = session["user"]
         token = user.get('token')
 
-        
 
-        # CHAMANDO API PARA APAGAR COMANDO
+        # CHAMANDO API PARA APAGAR USUÁRIO
         resultdelete = deleteUser(int(id[0]), token)
 
-        # SE TIVER ERRO DA API AO APAGAR COMANDO
+        # SE TIVER ERRO DA API AO APAGAR USUÁRIO
         if(resultdelete['erro']):
 
             flash(
                 f"Erro: Usuário de id: {id[0]} não pode ser apagado!", 'danger')
             return redirect(url_for(f'config'))
 
-        # SE TIVER SUCESSO API AO APAGAR COMANDO
+        # SE TIVER SUCESSO API AO APAGAR USUÁRIO
         flash(f"Sucesso: Usuário de id: {id[0]} apagado!", 'success')
         return redirect(url_for(f'config'))
 
@@ -123,7 +154,7 @@ def userDelete(id):
 
 
 
-# ROTA PARA SALVAR COMANDO
+# ROTA PARA SALVAR USUÁRIO
 @app.route("/newUser", methods=["GET", "POST"])
 def newUser():
 
@@ -132,7 +163,7 @@ def newUser():
         user = session["user"]
         token = user.get('token')
 
-        # PEGANDO DADOS DO NOVO COMANDO A SER GRAVADO
+        # PEGANDO DADOS DO NOVO USUÁRIO A SER GRAVADO
         if request.method == "POST":
 
             name = request.form.get("name")
@@ -141,12 +172,12 @@ def newUser():
             level = request.form.get("level")
             company = request.form.get("company")
 
-            # CHAMANDO API PARA SALVAR NO COMANDO
+            # CHAMANDO API PARA SALVAR USUÁRIO
             resultsave = saveNewUser(name,email,password,int(level),company,token)
 
             
 
-            # FAZENDO VALIDAÇÃO DA API
+            # FAZENDO VALIDAÇÃO DA API AO SALVAR USUÁRIO
             if(resultsave['erro']):
                 flash(f"Erro: {resultsave['message']}!", 'danger')
                 return redirect(url_for(f'config'))
@@ -160,7 +191,7 @@ def newUser():
 
 
 
-# ROTA PRINCIPAL DIRECIONANDO PARA HOME
+# ROTA DIRECIONANDO PARA CONFIGURAÇÃO ADMIN
 @app.route("/config/", methods=["GET", "POST"])
 def config():
     # VERIFICA SE USUÁRIO ESTAR LOGADO
@@ -176,7 +207,8 @@ def config():
         dataUserID = searchUserId(int(user['user']['id']),token)
 
 
-        return render_template("config.html",dataUsers=dataUsers['users'], idUser=dataUserID['idUser'])
+
+        return render_template("config.html",dataUsers=dataUsers['users'], idUser=dataUserID['users'])
 
     # SE O USUÁRIO NÃO TIVER LOGADO, ENVIA PARA O TELA LOGIN
     return redirect(url_for('login'))
