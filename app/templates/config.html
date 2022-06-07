@@ -4,7 +4,7 @@
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Responsive Admin Dashboard | Redesign</title>
-	<link rel="stylesheet" href="../static/css/stylehome.css">
+	<link rel="stylesheet" href="../static/css/stylehome.css" rel="stylesheet">
 	<!-- 	<link rel="stylesheet" href="../static/css/bootstrap.min.css"> -->
 
 	<meta charset="utf-8">
@@ -132,10 +132,10 @@
 								<div class="topbar-divider d-none d-sm-block">
 									<!-- Nav Item - User Information -->
 									<li class="nav-item dropdown no-arrow">
-										<a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+										<a class="nav-link dropdown-toggle" id="userDropdown" role="button"
 											data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 											<span id="nome_usu"
-												style="text-transform: uppercase;">{{user.user.name}}</span>
+												style="text-transform: uppercase;">{{idUser.name}}</span>
 											<img class="img-profile rounded-circle" width="40"
 												src="../static/images/user.jpg">
 										</a>
@@ -156,8 +156,8 @@
 												<ion-icon name="person-outline"></ion-icon>Perfil
 											</a>
 
-											{% if user.user.level == 2 %}
-											<a class="dropdown-item" href="#" data-toggle="modal"
+											{% if idUser.level == 2 %}
+											<a class="dropdown-item" data-toggle="modal"
 												data-target="#logoutModal">
 												<i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
 												<ion-icon name="settings-outline"></ion-icon>Configurações
@@ -183,39 +183,39 @@
 							</div>
 							<div class="modal-body">
 
-								<form method="post" action="#" class="row g-3">
+								<form method="post" action="/userUpdatePerfil/{{idUser.id}}" class="row g-3">
 									<div class="col-md-12">
 										<label class="form-label">Nome:</label>
-										<input name="description" value="{{user.user.name}}" type="text"
+										<input name="name" value="{{idUser.name}}" type="text"
 											class="form-control" required required>
 									</div>
 
 									<div class="col-md-12">
 										<label class="form-label">Email:</label>
-										<input name="email" value="{{user.user.email}}" type="text" class="form-control"
+										<input name="email" value="{{idUser.email}}" type="text" class="form-control"
 											required>
 									</div>
 
 									<div class="col-md-12">
 										<label class="form-label">Senha:</label>
-										<input name="name" type="text" class="form-control"
+										<input name="password" type="text" class="form-control"
 											placeholder="**************************">
 									</div>
 
 									<div class="col-md-12">
 										<label class="form-label">Nível:</label>
-										{% if user.user.level == 2 %}
-										<input name="level" value="Administrador" type="text" class="form-control"
+										{% if idUser.level == 2 %}
+										<input name="level" value="{{idUser.level}}" type="text" class="form-control"
 											required readonly>
 										{% else %}
-										<input name="level" value="Simples" type="text" class="form-control" required
+										<input name="level" value="{{idUser.level}}" type="text" class="form-control" required
 											readonly>
 										{% endif %}
 									</div>
 
 									<div class="col-md-12">
 										<label class="form-label">Empresa:</label>
-										<input name="company" value="{{user.user.company}}" type="text"
+										<input name="company" value="{{idUser.company}}" type="text"
 											class="form-control" required readonly>
 									</div>
 
@@ -303,11 +303,11 @@
 											aria-label="Close"></button>
 									</div>
 									<div class="modal-body">
-										<form method="post" action="/saveUser" class="row g-3">
+										<form method="post" action="/newUser" class="row g-3">
 
 											<div class="col-md-12">
 												<label class="form-label">Nome:</label>
-												<input name="description" type="text"
+												<input name="name" type="text"
 													class="form-control" required>
 											</div>
 		
@@ -319,7 +319,7 @@
 		
 											<div class="col-md-12">
 												<label class="form-label">Senha:</label>
-												<input name="passwd" type="text" class="form-control"
+												<input name="password" type="text" class="form-control"
 													placeholder="**************************" required>
 											</div>
 		
@@ -329,22 +329,15 @@
 											<div class="col-md-12">
 												<label for="new_login" class="form-label">Nivel:</label>
 
-												<select name="id" id="new_status" class="form-select form-control"
+												<select name="level" id="new_status" class="form-select form-control"
 													required>
 													<option value="" selected>Selecione...</option>
 													
-													<option value="1">Administrador</option>
-													<option value="2">Simples</option>
+													<option value="2">Administrador</option>
+													<option value="1">Simples</option>
 													
 												</select>
 											</div>
-
-
-
-
-
-
-
 
 		
 											<div class="col-md-12">
@@ -378,7 +371,7 @@
 								<td class="none">Empresa</td>
 								<td class="none">Ativo</td>
 								<td class="none">Criado</td>
-								{% if user.user.level == 2 %}
+								{% if idUser.level == 2 %}
 								<td class="all">Ações</td>
 								{% endif %}
 							</tr>
@@ -397,7 +390,7 @@
 								<td>{{dataUser.company}}</td>
 								<td>{{dataUser.active}}</td>
 								<td>{{dataUser.createdAt}}</td>
-								{% if user.user.level == 2 %}
+								{% if idUser.level == 2 %}
 								<td>
 									<a href="/update/{{dataUser.id}}" type="button" class="btn btn-outline-warning"
 										style=" border:none;" data-bs-toggle="modal"
@@ -408,50 +401,69 @@
 
 									<div class="modal fade" id="modaledit{{dataUser.id}}" tabindex="-1"
 										aria-labelledby="exampleModalLabel" aria-hidden="true">
-										<div class="modal-dialog modal-lg" role="document">
+										<div class="modal-dialog modal-md" role="document">
 											<div class="modal-content">
 												<div class="modal-header">
-													<h5 class="modal-title" id="exampleModalLabel">Atualizando Comando
+													<h5 class="modal-title" id="exampleModalLabel">Atualizando Usuário
 													</h5>
 													<button type="button" class="btn-close" data-bs-dismiss="modal"
 														aria-label="Close"></button>
 												</div>
 												<div class="modal-body">
-													<form method="post" action="/update/{{dataUser.id}}"
+													<form method="post" action="/updateUser/{{dataUser.id}}"
 														class="row g-3">
 
-
-
-														<div class="col-md-6">
-															<label class="form-label">Titulo:</label>
-															<input name="title" type="text" class="form-control"
-																required value="">
-														</div>
-
 														<div class="col-md-12">
-															<label class="form-label">O que faz?:</label>
-															<input name="description" type="text" class="form-control"
-																required value="">
+															<label class="form-label">Nome:</label>
+															<input name="name" type="text" value="{{dataUser.name}}"
+																class="form-control" required>
 														</div>
-
+					
 														<div class="col-md-12">
-															<label class="form-label">Linha de comando:</label>
-															<input name="commands" type="text" class="form-control"
-																required value="">
+															<label class="form-label">Email:</label>
+															<input name="email" type="text" value="{{dataUser.email}}" class="form-control"
+																required>
 														</div>
-
-														<div class="col-md-6">
-															<label class="form-label">Criado Por:</label>
-															<input name="creator" value="" type="text"
-																class="form-control" required readonly>
+					
+														<div class="col-md-12">
+															<label class="form-label">Senha:</label>
+															<input name="password" type="text" class="form-control"
+																placeholder="**************************" required>
 														</div>
-
-														<div class="col-md-6">
-															<label class="form-label">Tags:</label>
-															<input name="tags" type="text" class="form-control" required
-																value="">
+					
+			
+			
+														{% if dataUser.level == 2 %}
+														<div class="col-md-12">
+															<label for="new_login" class="form-label">Nivel:</label>
+															<select name="level" id="new_status" class="form-select form-control"
+																required>
+																<option value="{{dataUser.level}}" 
+																selected>Administrador</option>
+																<option value="2">Administrador</option>
+																<option value="1">Simples</option>	
+															</select>
 														</div>
-														<div class="modal-footer">
+														{% else %}
+														<div class="col-md-12">{{dataUser.level}}
+															<label for="new_login" class="form-label">Nivel:</label>
+															<select name="level" id="new_status" class="form-select form-control"
+																required>
+																<option value="{{dataUser.level}}" 
+																selected>Simples</option>
+																<option value="2">Administrador</option>
+																<option value="1">Simples</option>	
+															</select>
+														</div>
+														{% endif %}
+			
+					
+														<div class="col-md-12">
+															<label class="form-label">Empresa:</label>
+															<input name="company" type="text" value="{{dataUser.company}}"
+																class="form-control" required>
+														</div>
+															<div class="modal-footer">
 															<button type="button" class="btn btn-secondary"
 																data-bs-dismiss="modal">Fechar</button>
 															<button type="submit"
@@ -464,7 +476,7 @@
 										</div>
 									</div>
 
-									<a href="/commandDelete/{{dataUser.id}}" type="button"
+									<a href="/userDelete/{{dataUser.id}}" type="button"
 										class="btn btn-outline-danger" style=" border:none;"
 										onclick="return confirm('Deseja realmente apagar?')">
 										<ion-icon size="large" name="trash-outline"></ion-icon>

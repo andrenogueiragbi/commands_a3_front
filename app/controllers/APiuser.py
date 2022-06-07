@@ -1,8 +1,8 @@
 import requests
 import json
 
-#urlservidor = 'http://127.0.0.1:5001'
-urlservidor ='https://a3-commands-api.herokuapp.com'
+urlservidor = 'http://127.0.0.1:5001'
+#urlservidor ='https://a3-commands-api.herokuapp.com'
 
 
 def searchUser(token):
@@ -17,17 +17,27 @@ def searchUser(token):
 
     return response.json()
 
-""" 
-def saveCommand(type_id, title, description, commands, tags, creator, token):
-    url = f"{urlservidor}/v1/commands"
+def searchUserId(id,token):
+    url = f"{urlservidor}/v1/users/{id}"
+
+    payload = {}
+    headers = {"Content-Type": "application/json",
+               "Authorization": f"Bearer {token}"
+               }
+
+    response = requests.request("GET", url, json=payload, headers=headers)
+
+    return response.json()
+
+def saveNewUser(name,email,password,level,company,token):
+    url = f"{urlservidor}/v1/users"
 
     payload = {
-        "title": title,
-        "description": description,
-        "commands": commands,
-        "tags": tags,
-        "creator": creator,
-        "type_id": type_id
+        "name": name,
+        "email": email,
+        "password": password,
+        "level": level,
+        "company": company,  
 
     }
     headers = {
@@ -40,8 +50,9 @@ def saveCommand(type_id, title, description, commands, tags, creator, token):
     return response.json()
 
 
-def deleteCommand(id, token):
-    url = f"{urlservidor}/v1/commands/{id}"
+
+def deleteUser(id, token):
+    url = f"{urlservidor}/v1/users/{id}"
 
     payload = {
 
@@ -56,16 +67,15 @@ def deleteCommand(id, token):
     return response.json()
 
 
-def updateCommand(idCommands, type_id, title, description, commands, tags, creator, token):
-    url = f"{urlservidor}/v1/commands/{idCommands}"
+def updateUser(idUser, name,email,password,level,company,token):
+    url = f"{urlservidor}/v1/users/{idUser}"
 
     payload = {
-        "title": title,
-        "description": description,
-        "commands": commands,
-        "tags": tags,
-        "creator": creator,
-        "type_id": type_id
+        "name": name,
+        "email": email,
+        "password": password if password != "" else False,
+        "level": level,
+        "company": company,
 
     }
     headers = {
@@ -76,4 +86,3 @@ def updateCommand(idCommands, type_id, title, description, commands, tags, creat
     response = requests.request("PUT", url, headers=headers, json=payload)
 
     return response.json()
- """

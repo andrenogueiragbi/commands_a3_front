@@ -5,7 +5,7 @@ from app.controllers.login import makelogin
 from app.controllers.register import makeRegister
 from app.controllers.APIcommands import searchCommandSpecific, saveCommand, deleteCommand, updateCommand
 from app.controllers.APItype import searchTypeCommands
-from app.controllers.APiuser import searchUser
+from app.controllers.APiuser import searchUser,saveNewUser,deleteUser,updateUser,searchUserId
 import json
 import time
 """ import logging
@@ -13,8 +13,155 @@ import time
 logging.basicConfig(level=logging.DEBUG) """
 
 
+# ROTA DE ATULIZAR COMANDO
+@app.route("/userUpdatePerfil/<idUser>", methods=["GET", "POST"])
+def userUpdatePerfil(idUser):
+
+    # VERIFICA SE USUÁRIO ESTAR LOGADO
+    if "user" in session:
+
+        user = session["user"]
+        token = user.get('token')
+
+        # PEGANDO DADOS PARA ATUALIZAR COMANDO
+        if request.method == "POST":
+
+            name = request.form.get("name")
+            email = request.form.get("email")
+            password = request.form.get("password")
+            level = request.form.get("level")
+            company = request.form.get("company")
+
+
+            print('aquie estão os dados',idUser, name,email,password,level,company,token)
+
+
+            # CHAMANDO API PARA ATUALIZAR COMANDO
+            resultsave = updateUser(idUser, name,email,password,level,company,token)
+
+            # FAZENDO VALIDAÇÃO DA API AO ATULIZAR COMANDO
+            if(resultsave['erro']):
+                flash(f"Erro: {resultsave['message']}!", 'danger')
+                return redirect(url_for(f'config'))
+            else:
+
+                flash(f"Sucesso: User {name} atualizado!", 'success')
+                return redirect(url_for(f'config'))
+
+    return redirect(url_for('login'))
+
+
+
+# ROTA DE ATULIZAR COMANDO
+@app.route("/updateUser/<idUser>", methods=["GET", "POST"])
+def userUpdate(idUser):
+
+    # VERIFICA SE USUÁRIO ESTAR LOGADO
+    if "user" in session:
+
+        user = session["user"]
+        token = user.get('token')
+
+        # PEGANDO DADOS PARA ATUALIZAR COMANDO
+        if request.method == "POST":
+
+        
+            name = request.form.get("name")
+            email = request.form.get("email")
+            password = request.form.get("password")
+            level = request.form.get("level")
+            company = request.form.get("company")
+
+
+            # CHAMANDO API PARA ATUALIZAR COMANDO
+            resultsave = updateUser(idUser, name,email,password,level,company,token)
+
+            # FAZENDO VALIDAÇÃO DA API AO ATULIZAR COMANDO
+            if(resultsave['erro']):
+
+                flash(f"Erro: {resultsave['message']}!", 'danger')
+                return redirect(url_for(f'config'))
+
+            else:
+
+                flash(f"Sucesso: User {name} atualizado!", 'success')
+                return redirect(url_for(f'config'))
+
+    return redirect(url_for('login'))
+
+
+
+
+
+#ROTA DE APAGAR UM COMANDO USANDO ID POR PARAMETRO
+@app.route("/userDelete/<id>/", methods=["GET", "POST"])
+def userDelete(id):
+
+    # VERIFICA SE USUÁRIO ESTAR LOGADO E SE TEM ID PARA APAGAR
+    if "user" in session and id:
+
+        user = session["user"]
+        token = user.get('token')
+
+        
+
+        # CHAMANDO API PARA APAGAR COMANDO
+        resultdelete = deleteUser(int(id[0]), token)
+
+        # SE TIVER ERRO DA API AO APAGAR COMANDO
+        if(resultdelete['erro']):
+
+            flash(
+                f"Erro: Usuário de id: {id[0]} não pode ser apagado!", 'danger')
+            return redirect(url_for(f'config'))
+
+        # SE TIVER SUCESSO API AO APAGAR COMANDO
+        flash(f"Sucesso: Usuário de id: {id[0]} apagado!", 'success')
+        return redirect(url_for(f'config'))
+
+    return redirect(url_for('login'))
+
+
+
+# ROTA PARA SALVAR COMANDO
+@app.route("/newUser", methods=["GET", "POST"])
+def newUser():
+
+    # VERIFICA SE USUÁRIO ESTAR LOGADO
+    if "user" in session:
+        user = session["user"]
+        token = user.get('token')
+
+        # PEGANDO DADOS DO NOVO COMANDO A SER GRAVADO
+        if request.method == "POST":
+
+            name = request.form.get("name")
+            email = request.form.get("email")
+            password = request.form.get("password")
+            level = request.form.get("level")
+            company = request.form.get("company")
+
+            # CHAMANDO API PARA SALVAR NO COMANDO
+            resultsave = saveNewUser(name,email,password,int(level),company,token)
+
+            
+
+            # FAZENDO VALIDAÇÃO DA API
+            if(resultsave['erro']):
+                flash(f"Erro: {resultsave['message']}!", 'danger')
+                return redirect(url_for(f'config'))
+
+            else:
+                flash(f"Sucesso: Usuário {name} criado!", 'success')
+                return redirect(url_for(f'config'))
+
+    return redirect(url_for('login'))
+
+
+
+
 # ROTA PRINCIPAL DIRECIONANDO PARA HOME
-@app.route("/config", methods=["GET", "POST"])
+@app.route("/config/", methods=["GET", "POST"])
 def config():
     # VERIFICA SE USUÁRIO ESTAR LOGADO
     if "user" in session:
@@ -23,14 +170,13 @@ def config():
         user = session["user"]
         token = user.get('token')
 
+
         # CHAMANDO API E PEGANDO DADOS
-        data = searchCommandSpecific('Linux', token)
-        types = searchTypeCommands(token)
-        dataUsers = searchUser(token)   
+        dataUsers = searchUser(token)
+        dataUserID = searchUserId(int(user['user']['id']),token)
 
-       
 
-        return render_template("config.html", user=user, data=data['commands'],dataUsers=dataUsers['users'] ,types=types['types'])
+        return render_template("config.html",dataUsers=dataUsers['users'], idUser=dataUserID['idUser'])
 
     # SE O USUÁRIO NÃO TIVER LOGADO, ENVIA PARA O TELA LOGIN
     return redirect(url_for('login'))
@@ -229,44 +375,6 @@ def saveCommands():
             else:
                 flash(f"Sucesso: Comando {title} criado!", 'success')
                 return redirect(url_for(f'search', type=id[1]))
-
-    return redirect(url_for('login'))
-
-
-# ROTA DE ATULIZAR COMANDO
-@app.route("/update/<idCommands>", methods=["GET", "POST"])
-def updateCommands(idCommands):
-
-    # VERIFICA SE USUÁRIO ESTAR LOGADO
-    if "user" in session:
-
-        user = session["user"]
-        token = user.get('token')
-
-        # PEGANDO DADOS PARA ATUALIZAR COMANDO
-        if request.method == "POST":
-
-            id = request.form.get("id").split('-')
-            pagNewComands = id[1]
-            title = request.form.get("title")
-            description = request.form.get("description")
-            commands = request.form.get("commands")
-            tags = request.form.get("tags")
-            creator = request.form.get("creator")
-
-            # CHAMANDO API PARA ATUALIZAR COMANDO
-            resultsave = updateCommand(idCommands, int(
-                id[0]), title, description, commands, tags, creator, token)
-
-            # FAZENDO VALIDAÇÃO DA API AO ATULIZAR COMANDO
-            if(resultsave['erro']):
-
-                flash(f"Erro: {resultsave['message']}!", 'danger')
-                return redirect(url_for(f'search', type=pagNewComands))
-            else:
-
-                flash(f"Sucesso: Comando {title} atualizado!", 'success')
-                return redirect(url_for(f'search', type=pagNewComands))
 
     return redirect(url_for('login'))
 
