@@ -1,4 +1,3 @@
-import re
 from app import app
 from flask import redirect, url_for, render_template, request, session, flash
 from app.controllers.login import makelogin
@@ -204,6 +203,14 @@ def config():
         # CHAMANDO API E PEGANDO DADOS
         dataUsers = searchUser(token)
         dataUserID = searchUserId(int(user['user']['id']),token)
+
+
+
+
+        if dataUserID['users']['level'] == 1:
+            return redirect(url_for('login'))
+
+
 
 
 

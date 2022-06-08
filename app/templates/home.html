@@ -115,6 +115,8 @@
 			</ul>
 		</div>
 
+		<p>{{ user}}</p>
+
 		<!--main-->
 		<div class="main">
 			<div class="topbar">
@@ -237,7 +239,7 @@
 				</div>
 
 
-
+				
 				<!-- perfil Convite Modal-->
 				<div class="modal fade" id="perfilConvite" data-backdrop="static" data-keyboard="false" tabindex="-1"
 					aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -266,16 +268,6 @@
 						</div>
 					</div>
 				</div>
-
-
-
-
-
-
-
-
-
-
 			</div>
 
 			{% with messages = get_flashed_messages(with_categories=true) %}
@@ -307,17 +299,13 @@
 			</div>
 
 
-
-
 			{% endif %}
 			{% endfor %}
 			{% endif %}
 			{% endwith %}
 
 
-
 			<!--data list-->
-
 			<div class="details">
 				<div class="recentOrders">
 					<div class="cardHeader">
@@ -325,7 +313,7 @@
 						<h2>{{ data[0][0]['name'] }}</h2>
 						{% endif %}
 
-
+						
 
 
 						<!-- Button trigger modal -->
@@ -529,21 +517,8 @@
 		</div>
 	</div>
 
-
-
-
-
-
-
-
-
-
-
-
 	<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
 	<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-
-
 	<script type="text/javascript" src="../static/js/main.js"></script>
 
 
