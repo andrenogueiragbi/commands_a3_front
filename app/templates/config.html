@@ -186,8 +186,8 @@
 								<form method="post" action="/userUpdatePerfil/{{idUser.id}}" class="row g-3">
 									<div class="col-md-12">
 										<label class="form-label">Nome:</label>
-										<input name="name" value="{{idUser.name}}" type="text"
-											class="form-control" required required>
+										<input name="name" value="{{idUser.name}}" type="text" class="form-control"
+											required required>
 									</div>
 
 									<div class="col-md-12">
@@ -198,7 +198,7 @@
 
 									<div class="col-md-12">
 										<label class="form-label">Senha:</label>
-										<input name="name" type="text" class="form-control"
+										<input name="password" type="text" class="form-control"
 											placeholder="**************************">
 									</div>
 
@@ -208,10 +208,10 @@
 										<input name="level" value="{{idUser.level}}" type="text" class="form-control"
 											required readonly>
 										{% else %}
-										<input name="level" value="{{idUser.level}}" type="text" class="form-control" required
-											readonly>
+										<input name="level" value="{{idUser.level}}" type="text" class="form-control"
+											required readonly>
 										{% endif %}
-									</div>
+									</div>			
 
 									<div class="col-md-12">
 										<label class="form-label">Empresa:</label>
@@ -272,6 +272,8 @@
 
 			<!--data list-->
 
+			{% if idUser.level == 2 %}
+
 			<div class="details">
 				<div class="recentOrders">
 					<div class="cardHeader">
@@ -295,46 +297,41 @@
 											aria-label="Close"></button>
 									</div>
 									<div class="modal-body">
-										<form method="post" action="/saveUser" class="row g-3">
+										<form method="post" action="/newUser" class="row g-3">
 
 											<div class="col-md-12">
 												<label class="form-label">Nome:</label>
-												<input name="description" type="text"
-													class="form-control" required>
+												<input name="name" type="text" class="form-control" required>
 											</div>
-		
+
 											<div class="col-md-12">
 												<label class="form-label">Email:</label>
-												<input name="email" type="text" class="form-control"
-													required>
+												<input name="email" type="email" class="form-control" required>
 											</div>
-		
+
 											<div class="col-md-12">
 												<label class="form-label">Senha:</label>
-												<input name="passwd" type="text" class="form-control"
+												<input name="password" type="password" class="form-control"
 													placeholder="**************************" required>
 											</div>
-		
-
 
 
 											<div class="col-md-12">
 												<label for="new_login" class="form-label">Nivel:</label>
 
-												<select name="id" id="new_status" class="form-select form-control"
+												<select name="level" id="new_status" class="form-select form-control"
 													required>
 													<option value="" selected>Selecione...</option>
-													
-													<option value="1">Administrador</option>
-													<option value="2">Simples</option>
-													
+
+													<option value="2">Administrador</option>
+													<option value="1">Simples</option>
+
 												</select>
 											</div>
 
 											<div class="col-md-12">
 												<label class="form-label">Empresa:</label>
-												<input name="company" type="text"
-													class="form-control" required>
+												<input name="company" type="text" class="form-control" required>
 											</div>
 
 											<div class="modal-footer">
@@ -351,27 +348,27 @@
 						</div>
 					</div>
 
-					{% if idUser.level == 2 %}
 					
+
 					<table id="TableSimple">
 						<thead>
 							<tr>
 								<td class="all" style="text-align: center ;">+</td>
 								<td class="all">#</td>
 								<td class="all">Nome</td>
-								<td class="none">Email</td>
-								<td class="none">Level</td>
-								<td class="none">Empresa</td>
-								<td class="none">Ativo</td>
-								<td class="none">Criado</td>
-							
+								<td class="none">Email:</td>
+								<td class="none">Permissão:</td>
+								<td class="none">Empresa:</td>
+								<td class="none">Ativo:</td>
+								<td class="none">Criado:</td>
+
 								<td class="all">Ações</td>
-						
+
 							</tr>
 						</thead>
 
-						
-						
+
+
 						<tbody id="corpo">
 
 
@@ -382,11 +379,15 @@
 								<td>{{dataUser.id}}</td>
 								<td>{{dataUser.name}}</td>
 								<td>{{dataUser.email}}</td>
-								<td>{{dataUser.level}}</td>
+								{% if dataUser.level == 2%}
+								<td>Usuário Administrador</td>
+								{% else %}
+								<td>Usuário Simples</td>
+								{% endif %}
 								<td>{{dataUser.company}}</td>
 								<td>{{dataUser.active}}</td>
 								<td>{{dataUser.createdAt}}</td>
-		
+
 								<td>
 									<a href="/update/{{dataUser.id}}" type="button" class="btn btn-outline-warning"
 										style=" border:none;" data-bs-toggle="modal"
@@ -397,48 +398,66 @@
 
 									<div class="modal fade" id="modaledit{{dataUser.id}}" tabindex="-1"
 										aria-labelledby="exampleModalLabel" aria-hidden="true">
-										<div class="modal-dialog modal-lg" role="document">
+										<div class="modal-dialog modal-md" role="document">
 											<div class="modal-content">
 												<div class="modal-header">
-													<h5 class="modal-title" id="exampleModalLabel">Atualizando Comando
+													<h5 class="modal-title" id="exampleModalLabel">Atualizando Usuário
 													</h5>
 													<button type="button" class="btn-close" data-bs-dismiss="modal"
 														aria-label="Close"></button>
 												</div>
 												<div class="modal-body">
-													<form method="post" action="/update/{{dataUser.id}}"
+													<form method="post" action="/updateUser/{{dataUser.id}}"
 														class="row g-3">
 
-
-
-														<div class="col-md-6">
-															<label class="form-label">Titulo:</label>
-															<input name="title" type="text" class="form-control"
-																required value="">
+														<div class="col-md-12">
+															<label class="form-label">Nome:</label>
+															<input name="name" value="{{dataUser.name}}" type="text" class="form-control"
+																required>
 														</div>
 
 														<div class="col-md-12">
-															<label class="form-label">O que faz?:</label>
-															<input name="description" type="text" class="form-control"
-																required value="">
+															<label class="form-label">Email:</label>
+															<input name="email" value="{{dataUser.email}}" type="text" class="form-control"
+																required>
 														</div>
 
 														<div class="col-md-12">
-															<label class="form-label">Linha de comando:</label>
-															<input name="commands" type="text" class="form-control"
-																required value="">
+															<label class="form-label">Senha:</label>
+															<input name="password"  type="text" class="form-control"
+																placeholder="**************************">
 														</div>
 
-														<div class="col-md-6">
-															<label class="form-label">Criado Por:</label>
-															<input name="creator" value="" type="text"
-																class="form-control" required readonly>
+
+
+														{% if dataUser.level == 2 %}
+														<div class="col-md-12">
+															<label for="new_login" class="form-label">Nivel:</label>
+															<select name="level" id="new_status"
+																class="form-select form-control" required>
+																<option value="2"  selected>Administrador</option>
+																<option value="2">Administrador</option>
+																<option value="1">Simples</option>
+															</select>
+														</div>
+														{% else %}
+														<div class="col-md-12">
+															<label for="new_login" class="form-label">Nivel:</label>
+															<select name="level" id="new_status"
+																class="form-select form-control" required>
+																<option value="1" selected>Simples</option>
+																<option value="2">Administrador</option>
+																<option value="1">Simples</option>
+
+															</select>
 														</div>
 
-														<div class="col-md-6">
-															<label class="form-label">Tags:</label>
-															<input name="tags" type="text" class="form-control" required
-																value="">
+														{% endif %}
+
+														<div class="col-md-12">
+															<label class="form-label">Empresa:</label>
+															<input name="company" value="{{dataUser.company}}" type="text" class="form-control"
+																required>
 														</div>
 														<div class="modal-footer">
 															<button type="button" class="btn btn-secondary"
@@ -453,19 +472,19 @@
 										</div>
 									</div>
 
-									<a href="/commandDelete/{{dataUser.id}}" type="button"
+									<a href="/userDelete/{{dataUser.id}}" type="button"
 										class="btn btn-outline-danger" style=" border:none;"
-										onclick="return confirm('Deseja realmente apagar?')">
+										onclick="return confirm('Deseja realmente apagar o  {{dataUser.id}} ?')">
 										<ion-icon size="large" name="trash-outline"></ion-icon>
 									</a>
 
 								</td>
-								
+
 							</tr>
 
 							{% endfor %}
 
-							
+
 
 						</tbody>
 					</table>
@@ -473,7 +492,7 @@
 					{% endif %}
 
 
-				
+
 				</div>
 			</div>
 		</div>

@@ -66,9 +66,6 @@ def userUpdatePerfil(idUser):
             company = request.form.get("company")
 
 
-            print('aquie estão os dados',idUser, name,email,password,level,company,token)
-
-
             # CHAMANDO API PARA ATUALIZAR PERFIL
             resultsave = updateUser(idUser, name,email,password,level,company,token)
 
@@ -109,6 +106,7 @@ def userUpdate(idUser):
             # CHAMANDO API PARA ATUALIZAR USUÁRIO
             resultsave = updateUser(idUser, name,email,password,level,company,token)
 
+
             # FAZENDO VALIDAÇÃO DA API AO ATULIZAR USUÁRIO
             if(resultsave['erro']):
 
@@ -137,17 +135,18 @@ def userDelete(id):
 
 
         # CHAMANDO API PARA APAGAR USUÁRIO
-        resultdelete = deleteUser(int(id[0]), token)
+        resultdelete = deleteUser(int(id), token)
+
 
         # SE TIVER ERRO DA API AO APAGAR USUÁRIO
         if(resultdelete['erro']):
 
             flash(
-                f"Erro: Usuário de id: {id[0]} não pode ser apagado!", 'danger')
+                f"Erro: Usuário de id: {id} não pode ser apagado!", 'danger')
             return redirect(url_for(f'config'))
 
         # SE TIVER SUCESSO API AO APAGAR USUÁRIO
-        flash(f"Sucesso: Usuário de id: {id[0]} apagado!", 'success')
+        flash(f"Sucesso: Usuário de id: {id} apagado!", 'success')
         return redirect(url_for(f'config'))
 
     return redirect(url_for('login'))
@@ -282,6 +281,7 @@ def login():
         # CHAMANDO A API PARA FAZER LOGIN
         statusLogin = makelogin(email, password)
 
+
         # QUANDO O LOGIN É AUTORIZADO COM SUCESSO
         if not statusLogin['erro']:
 
@@ -329,7 +329,6 @@ def register():
         coupon = request.form.get("coupon")
         company = request.form.get("company")
 
-        # print(name,email,password,coupon,company)
 
         # CHAMANDO API PARA REGISTRAR NOVO USUÁRIO
         statusLogin = makeRegister(name, email, password, coupon, company)
@@ -373,6 +372,47 @@ def commandDelete(id):
         return redirect(url_for(f'search', type=id[1]))
 
     return redirect(url_for('login'))
+
+
+
+#ROTA DE ATULIZAR COMANDO
+@app.route("/update/<idCommands>",methods=["GET", "POST"])
+def updateCommands(idCommands): 
+
+    #VERIFICA SE USUÁRIO ESTAR LOGADO
+    if "user" in session:
+        
+        user = session["user"]
+        token = user.get('token')
+
+        #PEGANDO DADOS PARA ATUALIZAR COMANDO
+        if request.method == "POST":
+
+            id = request.form.get("id").split('-')
+            pagNewComands = id[1]
+            title = request.form.get("title")
+            description = request.form.get("description")
+            commands = request.form.get("commands")
+            tags = request.form.get("tags")
+            creator = request.form.get("creator")
+
+            #CHAMANDO API PARA ATUALIZAR COMANDO
+            resultsave = updateCommand(idCommands,int(id[0]),title,description,commands,tags,creator,token)
+
+            #FAZENDO VALIDAÇÃO DA API AO ATULIZAR COMANDO
+            if(resultsave['erro']):
+
+                flash(f"Erro: {resultsave['message']}!",'danger')
+                return redirect(url_for(f'search',type=pagNewComands))
+            else:
+
+                flash(f"Sucesso: Comando {title} atualizado!",'success')
+                return redirect(url_for(f'search',type=pagNewComands))
+
+    
+
+
+
 
 
 # ROTA PARA SALVAR COMANDO
